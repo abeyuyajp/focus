@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -71,8 +72,41 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
+            <div class="container" style="margin-left: 0px;">
+                <div class="row">
+
+                    <div class="col-3" style="background-color: white; height: 100vh;">
+                        <div class="sidebar-fixed">
+                            <ul class="nav flex-column">
+                                <li class="nav-item m-5" style="margin: 0 auto; width: 50%;">
+                                    <a href="{{ url('posts/index') }}">
+                                        <i class="far fa-edit fa-3x"></i>
+                                        <p>セッション</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item m-5">
+                                    <a href="#">
+                                        <i class="far fa-calendar-alt fa-3x"></i>
+                                        <p>カレンダー</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item m-5">
+                                    <a href="#">
+                                        <i class="far fa-user fa-3x"></i>
+                                        <p>マイページ</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+
+                    </div>
+                    
+                </div>
+            </div>
             @yield('content')
         </main>
     </div>

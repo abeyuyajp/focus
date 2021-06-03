@@ -16,4 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('/posts', 'PostsController',['except' => ['show']]);
+Route::get('/', 'PostsController@index');
+Route::resource('/posts', 'PostsController',['except' => ['show', 'index']]);
+Route::get('/home', 'HomeController@index')->name('home');
