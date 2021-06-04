@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="margin-left: 0px;">
+<!--div class="container" style="margin-left: 0px;">
     <div class="row">
 
         <div class="col-3" style="background-color: white; height: 100vh;">
@@ -27,6 +27,12 @@
                     </li>
                 </ul>
             </div>
+        </div-->
+
+        <div id="app">
+            <v-app>
+                <calendar-component></calendar-component>
+            <v-app>
         </div>
 
 
@@ -55,6 +61,6 @@
         </div>
         
         
-    </div>
-</div>
+    <!--/div>
+</div-->
 @endsection
