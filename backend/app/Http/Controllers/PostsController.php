@@ -23,12 +23,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', Auth::user()->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        #$posts = Post::orderBy('created_at', 'asc')->get();
-
+        $posts = Post::orderBy('created_at', 'desc')->get();
         
         return view('posts.index', compact('posts'));
     }
@@ -54,6 +49,8 @@ class PostsController extends Controller
         $posts = new Post;
         $posts->user_id    =    Auth::user()->id;
         $posts->work_type  =    $request->work_type;
+        $posts->start      =    $request->start;
+        $posts->end        =    $request->end;
         $posts->save(); 
         return redirect('/')->with('message', '投稿が完了しました');
     }
@@ -93,10 +90,23 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteEvent(Request $request)
     {
-        $post = Post::find($id);
-        $post->delete();
-        return redirect('/')->with('message', '投稿を削除しました');
+        $calendar = Post::where('id','=',$request->id)
+            ->first();
+        if($calendar){
+            $calendar->delete();
+        }
     }
+
+    public function getAllEvent(){
+        $calendars = Post::where('user_id', Auth::user()->id)
+            ->get();
+        return $calendars;
+    }
+
+    public function showCalendar(){
+        return view('posts.calendar');
+    }
+
 }

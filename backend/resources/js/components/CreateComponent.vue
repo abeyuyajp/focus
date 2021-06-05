@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="800px">
 
       <v-card>
         <v-card-title>
@@ -11,7 +11,7 @@
             <v-row>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="タイトル" required v-model="name"></v-text-field>
+                <v-text-field label="作業内容" required v-model="work_type"></v-text-field>
               </v-col>
 
 
@@ -59,7 +59,7 @@
         start : null,
         end : null,
         day : "",
-        name : "",
+        work_type : "",
     }),
     methods:{
         open(date){
@@ -67,7 +67,7 @@
             this.day = date;
             this.start = null;
             this.end = null;
-            this.name = "";
+            this.work_type = "";
         },
         save(){
             if( !this.isNotNull(this.start, this.end) ){
@@ -79,7 +79,7 @@
               return;
             }
             const params = {
-              name : this.name,
+              work_type : this.work_type,
               start : this.day + ' ' + this.start,
               end : this.day + ' ' + this.end
             }

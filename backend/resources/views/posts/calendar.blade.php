@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container" style="margin-left: 0px;">
     <div class="row">
 
-        <div class="col-3" style="background-color: white; height: 100vh;">
+        <div class="col-3" style="background-color: white; height: 100vh; margin-right: 20px;">
             <div class="sidebar-fixed">
                 <ul class="nav flex-column">
                     <li class="nav-item m-5" style="margin: 0 auto; width: 50%;">
@@ -30,23 +29,17 @@
             </div>
         </div>
 
-        <div class="col">
-            <div class="card" style="border-radius: 20px;">  
-                <div class="card-body">
-                    <form enctype="multipart/form-data" method="POST" action="/posts/{{ $post->id }}">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group mt-4">
-                            <label for="work_type" class="control-label">作業</label>
-                            <input class="form-control" name="work_type" type="text" style="border-radius: 20px;">
-                        </div>
-                        <button class="btn d-block" type="submit" style="margin: 0 auto;">更新</button>
-                        <input type="hidden" name="id" value="{{$post->id}}">
-                    </form>
-                </div>
+        <div class="col pt-5" style="background: white;">
+            <div id="app">
+                <v-app>
+                    <calendar-component></calendar-component>
+                <v-app>
             </div>
         </div>
-        
+
+
     </div>
 </div>
+
+
 @endsection

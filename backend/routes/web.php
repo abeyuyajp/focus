@@ -17,5 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/', 'PostsController@index');
-Route::resource('/posts', 'PostsController',['except' => ['show', 'index']]);
+Route::resource('/posts', 'PostsController',['except' => ['show', 'index', 'destroy']]);
 Route::get('/home', 'HomeController@index')->name('home');
+
+//カレンダー
+Route::get('/get/calendar', 'PostsController@getAllEvent');
+Route::get('/calendar', 'PostsController@showCalendar')->name('calendar.index');
+Route::post('/delete','PostsController@deleteEvent');

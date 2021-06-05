@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
+        'id',
         'user_id',
         'work_type',
+        'start',
+        'end'
     ];
 
     protected $table = 'posts';

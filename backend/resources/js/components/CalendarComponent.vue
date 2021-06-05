@@ -12,6 +12,7 @@
           color="grey darken-2"
           v-on="on"
         >
+        <v-icon>mdi-chevron-left</v-icon>
           <span>{{type}}</span>
         </v-btn>
       </template>
@@ -56,7 +57,7 @@
         >
               <v-card-text>
                 <span v-html="selectedEvent.id"></span>
-                <span v-html="selectedEvent.name"></span>
+                <span v-html="selectedEvent.work_type"></span>
               </v-card-text>
 
               <v-btn
@@ -89,13 +90,13 @@
     datas:[],
     events: [
         {
-          name: 'あたりまえ体操をする',
+          work_type: 'あたりまえ体操をする',
           start: '2021-05-18',
           end: '2021-05-1',
           id : 1,
         },
         {
-          name: 'ミーティング',
+          work_type: 'ミーティング',
           start: '2021-05-1 09:00',
           end: '2021-05-1 10:00',
           id : 2,
@@ -110,20 +111,41 @@
    
     },
     mounted () {
-
+        this.getAllEvent();
+        axios.get('/get/calendar')
+          .then( res => {
+              this.events = res.data;
+          })
+          .catch( e => {
+              console.log(e);
+          })
     },
     methods:{
         showDay( { date } ){
           this.today = date
           this.type = 'day'
         },
+
+        //フォームを表示するメソッド
         createEvent( { date } ){
           this.$refs.form.open(date);
         },
-        saveEvent(params){
-          this.events.push(params);
-          console.log(`保存しました。${params}`)
+
+        //投稿を保存するメソッド
+        async saveEvent(params){
+          await axios.post('/posts', params)
+            .then( res => {
+              console.log(res);
+            })
+            .catch( e => {
+              console.log(e);
+            })
+            .finally( () => {
+               this.getAllEvent();
+            })
+          console.log("保存しました。");
         },
+
         clickEvent( {nativeEvent, event} ){
           this.selectedEvent = event;
           this.selectedItem = nativeEvent.target;
@@ -131,14 +153,38 @@
 
           nativeEvent.stopPropagation();
         },
-        deleteEvent(){
-          let newArray = this.events.filter( item => {
-              return item.id != this.selectedEvent.id
-          });
 
-          this.events = newArray;
+        //削除メソッド
+        async deleteEvent(){
+          const params = {
+            id : this.selectedEvent.id
+          }
+
+          await axios.post('/delete',params)
+            .then( res => {
+              alert("削除しました。");
+            })
+            .catch( e => {
+              console.log(e);
+            })
+            .finally( () => {
+              this.getAllEvent();
+            })
+
+          //閉じる
           this.eventAlert = false;
-        }
+        },
+
+        //更新後の一覧を取得するメソッド
+        async getAllEvent(){
+          axios.get('/get/calendar')
+          .then( res => {
+              this.events = res.data;
+          })
+          .catch( e => {
+              console.log(e);
+          })
+        },
     }
   }
 </script>
