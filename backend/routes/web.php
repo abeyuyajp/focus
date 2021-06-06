@@ -24,3 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/get/calendar', 'PostsController@getAllEvent');
 Route::get('/calendar', 'PostsController@showCalendar')->name('calendar.index');
 Route::post('/delete','PostsController@deleteEvent');
+
+//マッチング
+Route::post('/joins', 'JoinController@store')->name('joins.store');
+
+

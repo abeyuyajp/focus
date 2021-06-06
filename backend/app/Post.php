@@ -16,7 +16,14 @@ class Post extends Model
 
     protected $table = 'posts';
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(\App\User::class, 'user_id');
     }
+
+    public function join()
+    {
+        return $this->hasOne('App\Join');
+    }
+
 }

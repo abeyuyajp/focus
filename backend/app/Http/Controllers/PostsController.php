@@ -9,6 +9,7 @@ use Validator;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Session;
+use App\Join;
 
 class PostsController extends Controller
 {
@@ -23,8 +24,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
-        
+        //すでにJoinされた投稿を取得
+        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
+
+        //Joinされている投稿IDは全て排除して取得
+        $posts = Post::orderBy('created_at', 'desc')->whereNotIn('id',$joinedPostIds)->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -105,8 +109,18 @@ class PostsController extends Controller
         return $calendars;
     }
 
-    public function showCalendar(){
-        return view('posts.calendar');
+    public function showCalendar()
+    {
+        //自分がJoinした投稿を取得
+        $joinPostIds = Join::where('from_user_id', Auth::user()->id)->get();
+
+        //自分の全ての投稿IDを取得
+        $posts = Post::where('user_id', Auth::user()->id)->pluck('id')->ToArray();
+        
+        //Joinされた自分の全ての投稿IDを取得
+        $joinedPostIds = Join::whereIn('post_id', $posts)->get();
+
+        return view('posts.calendar',['joinPostIds' => $joinPostIds, 'joinedPostIds' => $joinedPostIds]);
     }
 
 }
