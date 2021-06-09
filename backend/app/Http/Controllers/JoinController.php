@@ -20,4 +20,12 @@ class JoinController extends Controller
 
         return redirect(url('/calendar'));
     }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->id;
+        $join = Join::find($id);
+        $join->delete();
+        return redirect('/calendar');
+    }
 }

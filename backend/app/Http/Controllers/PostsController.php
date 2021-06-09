@@ -121,8 +121,7 @@ class PostsController extends Controller
         //Joinされた自分の全ての投稿IDを取得
         $joinedPostIds = Join::whereIn('post_id', $posts)->get();
 
-        //string型の時間を変更
-
+        
         return view('posts.calendar',['joinPostIds' => $joinPostIds, 'joinedPostIds' => $joinedPostIds]);
     }
 

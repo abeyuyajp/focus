@@ -27,6 +27,7 @@ Route::post('/delete','PostsController@deleteEvent');
 
 //マッチング
 Route::post('/joins', 'JoinController@store')->name('joins.store');
+Route::delete('/joins/delete', 'JoinController@destroy')->name('joins.destroy');
 
 //ビデオチャット
 Route::get('/video_chat', 'VideoChatController@index')->name('video_chat.index');
