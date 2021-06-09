@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'skyway' => [
+        'key' => env('SKYWAY_API_KEY'),
+        'secret' => env('SKYWAY_SECRET_KEY'),
+    ],
+
 ];

@@ -30,33 +30,38 @@
         </div>
 
         <div class="col-8 pt-5" style="background: white;">
-            <div id="app">
+            <div id="app" class="mt-5">
                 <v-app>
                     <calendar-component></calendar-component>
                 <v-app>
             </div>
         </div>
 
+        
         <!-- joinしたorされた投稿を表示 -->
         <div class="col-2">
                 <h4>自分がJoinした投稿</h4>
+                <!-- 終了時刻以降の投稿は表示しない -->
                 @foreach($joinPostIds as $joinPostId)
                     <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px;">
                         <div class="card-body">
                             <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
-                            <p class="card-text text-muted">作業内容：{{ $joinPostId->post->work_type }}</p>
+                            <p class="card-text text-muted">ルーム名：{{ $joinPostId->post->work_type }}</p>
                             <p class="card-text text-muted">時間：{{ $joinPostId->post->start }}〜{{ $joinPostId->post->end }}</p>
+                            <a class="btn btn-primary" href="{{ url('/video_chat') }}" role="button" style="color: white;">セッションを開始</a>
                         </div>
                     </div>
                 @endforeach
                 
                 <h4>Joinされた投稿</h4>
+                <!-- 終了時刻以降の投稿は表示しない -->
                 @foreach($joinedPostIds as $joinedPostId)
                     <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px;">
                         <div class="card-body">
                             <h3 class="card-title">{{ $joinedPostId->post->user->name }}</h3>
-                            <p class="card-text text-muted">作業内容：{{ $joinedPostId->post->work_type }}</p>
+                            <p class="card-text text-muted">ルーム名：{{ $joinedPostId->post->work_type }}</p>
                             <p class="card-text text-muted">時間：{{ $joinedPostId->post->start }}〜{{ $joinedPostId->post->end }}</p>
+                            <a class="btn btn-primary" href="{{ url('/video_chat') }}" role="button" style="color: white;">セッションを開始</a>
                         </div>
                     </div>
                 @endforeach

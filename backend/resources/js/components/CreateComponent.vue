@@ -11,7 +11,7 @@
             <v-row>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="作業内容" required v-model="work_type"></v-text-field>
+                <v-text-field label="ルーム名" required v-model="work_type"></v-text-field>
               </v-col>
 
 

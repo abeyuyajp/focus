@@ -5,6 +5,36 @@
       <create-component ref="form" @save="saveEvent"></create-component>
     </div>
 
+<v-sheet height="64">
+  <v-toolbar flat>
+    <v-btn
+      outlined
+      class="mr-4"
+      color="grey darken-2"
+      @click="setToday"
+    >
+      Today
+    </v-btn>
+    <v-btn
+      icon
+      class="ma-2"
+      color="blue"
+      @click="prev"
+    >
+      <v-icon>mdi-chevron-left</v-icon>
+    </v-btn>
+    <v-btn
+      icon
+      class="ma-2"
+      color="blue"
+      @click="next"
+    >
+      <v-icon>mdi-chevron-right</v-icon>
+    </v-btn>
+    <v-toolbar-title v-if="$refs.calendar">
+      {{ $refs.calendar.title }}
+    </v-toolbar-title>
+    <v-spacer></v-spacer>
     <v-menu bottom right>
       <template v-slot:activator="{ on }">
         <v-btn
@@ -12,11 +42,12 @@
           color="grey darken-2"
           v-on="on"
         >
-        <v-icon>mdi-chevron-left</v-icon>
-          <span>{{type}}</span>
+          <span>{{ typeToLabel[type] }}</span>
+          <v-icon right>
+            mdi-menu-down
+          </v-icon>
         </v-btn>
       </template>
-
       <v-list>
         <v-list-item @click="type = 'day'">
           <v-list-item-title>Day</v-list-item-title>
@@ -29,23 +60,24 @@
         </v-list-item>
       </v-list>
     </v-menu>
-
-    <v-sheet height="500">
-      <v-calendar
-          ref="calendar"
-          locale="ja-jp"
-          :type="type"
-          :now="today"
-          :value="today"
-          :events="events"
-          color="primary"
-          @click:event="clickEvent"
-          @click:date="showDay"
-          @click:day="createEvent"
-      ></v-calendar>
-    </v-sheet>
-
-    <v-menu
+  </v-toolbar>
+</v-sheet>
+<v-sheet height="80vh">
+  <v-calendar
+      ref="calendar"
+      locale="ja-jp"
+      :type="type"
+      :now="today"
+      :value="today"
+      v-model="focus"
+      color="primary"
+      :events="events"
+      @click:event="clickEvent"
+      @click:date="showDay"
+      @click:day="createEvent"
+  ></v-calendar>
+</v-sheet>
+<v-menu
         v-model="eventAlert"
         :close-on-content-click="false"
         :activator="selectedItem"
@@ -81,34 +113,27 @@
   </div>
 </template>
 
-
 <script>
+import moment from 'moment';
+
   export default {
     data: () => ({
-    today: `2021-05-01`,
-    type:'month',
-    datas:[],
-    events: [
-        {
-          work_type: 'あたりまえ体操をする',
-          start: '2021-05-18',
-          end: '2021-05-1',
-          id : 1,
-        },
-        {
-          work_type: 'ミーティング',
-          start: '2021-05-1 09:00',
-          end: '2021-05-1 10:00',
-          id : 2,
-        },
-      ],
+      focus: '',
+      type:'month',
+      typeToLabel: {
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+      },
+      datas:[],
+      events: [],
       eventAlert : false,
       selectedItem : null,
       selectedEvent : {},
-
+      value: moment().format('yyyy-MM-DD'), 
     }),
     computed:{
-   
+      
     },
     mounted () {
         this.getAllEvent();
@@ -129,6 +154,20 @@
         //フォームを表示するメソッド
         createEvent( { date } ){
           this.$refs.form.open(date);
+        },
+
+        setToday () {
+          this.focus = this.today
+        },
+
+        //前の月
+        prev(){
+          this.$refs.calendar.prev()
+        },
+
+        //次の月
+        next(){
+          this.$refs.calendar.next()
         },
 
         //投稿を保存するメソッド

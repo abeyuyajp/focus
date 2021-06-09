@@ -29,6 +29,7 @@ class PostsController extends Controller
 
         //Joinされている投稿IDは全て排除して取得
         $posts = Post::orderBy('created_at', 'desc')->whereNotIn('id',$joinedPostIds)->get();
+        
         return view('posts.index', compact('posts'));
     }
 
@@ -119,6 +120,8 @@ class PostsController extends Controller
         
         //Joinされた自分の全ての投稿IDを取得
         $joinedPostIds = Join::whereIn('post_id', $posts)->get();
+
+        //string型の時間を変更
 
         return view('posts.calendar',['joinPostIds' => $joinPostIds, 'joinedPostIds' => $joinedPostIds]);
     }

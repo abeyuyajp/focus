@@ -28,4 +28,8 @@ Route::post('/delete','PostsController@deleteEvent');
 //マッチング
 Route::post('/joins', 'JoinController@store')->name('joins.store');
 
+//ビデオチャット
+Route::get('/video_chat', 'VideoChatController@index')->name('video_chat.index');
+
+
 
