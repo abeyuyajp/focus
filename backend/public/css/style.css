@@ -1,0 +1,23 @@
+/*カスタマイズ用*/
+
+/*背景*/
+.bg-navy {
+  background-color: #2A3F54 !important;
+}
+
+/*テキスト*/
+.text-white {
+  color: white !important;
+}
+
+/*テキストリンク無し*/
+.link-none {
+  text-decoration: none !important;
+}
+
+/*ボタン1*/
+.original-green {
+  color: #fff !important;
+  background-color: #1ABB9C !important;
+  border-color: #1ABB9C !important;
+}

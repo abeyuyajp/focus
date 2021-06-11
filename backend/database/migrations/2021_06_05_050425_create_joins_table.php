@@ -16,9 +16,11 @@ class CreateJoinsTable extends Migration
         Schema::create('joins', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('from_user_id');
+            $table->unsignedBigInteger('to_user_id');
             $table->unsignedBigInteger('post_id');
 
             $table->foreign('from_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('to_user_id')->references('user_id')->on('posts')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->timestamps();
         });

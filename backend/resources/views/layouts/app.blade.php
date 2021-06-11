@@ -18,14 +18,16 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
-    <!-- Styles -->
+    <!-- Bootstrap -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- カスタマイズ -->
+    <link href="{{ asset('css/style.css')}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-navy shadow-sm text-white">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -40,6 +42,14 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
+                                <li class="dropdown-header">No notifications</li>
+                            </ul>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -52,7 +62,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -73,10 +83,37 @@
                 </div>
             </div>
         </nav>
-        <main class="py-4">
-            
-            @yield('content')
-        </main>
+        <div class="container-fluid pl-0">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-1 d-md-block bg-navy sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-5 mt-5 text-center" >
+                                <a class="text-white link-none" href="{{ url('/') }}">
+                                    <i class="far fa-edit fa-2x"></i>
+                                    <p><strong>セッション</strong></p>
+                                </a>
+                            </li>
+                            <li class="nav-item mb-5 mt-5 text-center">
+                                <a class="text-white link-none" href="{{ url('/calendar') }}">
+                                    <i class="far fa-calendar-alt fa-2x "></i>
+                                    <p><strong>カレンダー</strong></p>
+                                </a>
+                            </li>
+                            <li class="nav-item mb-5 mt-5 text-center">
+                                <a  class="text-white link-none" href="#">
+                                    <i class="far fa-user fa-2x"></i>
+                                    <p><strong>マイページ</strong></p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <main class="col-md-9  py-4">
+                    @yield('content')
+                </main>
+            </div>
+        </div>
     </div>
 </body>
 </html>

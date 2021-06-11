@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\PasswordResetNotification;
+use App\Notifications\PostJoined;
 
 class User extends Authenticatable
 {
@@ -45,5 +47,11 @@ class User extends Authenticatable
     public function joins()
     {
         return $this->hasMany('App\Join');
+    }
+
+    //パスワードリセット通知の送信
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetNotification($token));
     }
 }
