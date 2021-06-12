@@ -54,6 +54,7 @@ class PostsController extends Controller
         $posts = new Post;
         $posts->user_id    =    Auth::user()->id;
         $posts->work_type  =    $request->work_type;
+        $posts->room_name  =    $request->room_name;
         $posts->start      =    $request->start;
         $posts->end        =    $request->end;
         $posts->save(); 
@@ -114,12 +115,14 @@ class PostsController extends Controller
     {
         //自分がJoinした投稿を取得
         $joinPostIds = Join::where('from_user_id', Auth::user()->id)->get();
+        //Joinされた投稿を取得
+        $joinedPostIds = Join::where('to_user_id', Auth::user()->id)->get();
 
         //自分の全ての投稿IDを取得
-        $posts = Post::where('user_id', Auth::user()->id)->pluck('id')->ToArray();
+        #$posts = Post::where('user_id', Auth::user()->id)->pluck('id')->ToArray();
         
         //Joinされた自分の全ての投稿IDを取得
-        $joinedPostIds = Join::whereIn('post_id', $posts)->get();
+        #$joinedPostIds = Join::whereIn('post_id', $posts)->get();
 
         
         return view('posts.calendar',['joinPostIds' => $joinPostIds, 'joinedPostIds' => $joinedPostIds]);

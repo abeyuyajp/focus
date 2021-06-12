@@ -42,15 +42,15 @@
             
             <!-- joinしたorされた投稿を表示 -->
             <div class="col-2">
-                    <h4>自分がJoinした投稿</h4>
+                    <h4>ジョインした投稿</h4>
                     @foreach($joinPostIds as $joinPostId)
                         <!-- 終了時刻以降の投稿は表示しない -->
                         @if(strtotime(date('Y-m-d H:i')) < strtotime($joinPostId->post->end))
                         <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px;">
                             <div class="card-body">
                                 <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
-                                <p class="card-text text-muted">ルーム名：{{ $joinPostId->post->work_type }}</p>
-                                <p class="card-text text-muted">
+                                <p class="card-text text-muted">ルーム名：{{ $joinPostId->post->room_name }}</p>
+                                <p class="card-text text-muted">作業：{{ $joinPostId->post->work_type }}</p>
                                     <i class="far fa-clock"></i>
                                     {{ date('n月d日', strtotime($joinPostId->post->start)) }}&emsp;
                                     {{ date('H:i', strtotime($joinPostId->post->start)) }}〜{{ date('H:i', strtotime($joinPostId->post->end)) }}
@@ -68,15 +68,15 @@
                         @endif
                     @endforeach
                     
-                    <h4>Joinされた投稿</h4>
+                    <h4>ジョインされた投稿</h4>
                     @foreach($joinedPostIds as $joinedPostId)
                         <!-- 終了時刻以降の投稿は表示しない -->
                         @if(strtotime(date('Y-m-d H:i')) < strtotime($joinedPostId->post->end))
                         <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px;">
                             <div class="card-body">
                                 <h3 class="card-title">{{ $joinedPostId->post->user->name }}</h3>
+                                <p class="card-text text-muted">ルーム名：{{ $joinedPostId->post->room_name }}</p>
                                 <p class="card-text text-muted">ルーム名：{{ $joinedPostId->post->work_type }}</p>
-                                <p class="card-text text-muted">
                                     <i class="far fa-clock"></i>
                                     {{ date('n月d日', strtotime($joinedPostId->post->start)) }}&emsp;
                                     {{ date('H:i', strtotime($joinedPostId->post->start)) }}〜{{ date('H:i', strtotime($joinedPostId->post->end)) }}

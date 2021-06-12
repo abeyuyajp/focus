@@ -88,7 +88,6 @@
           flat
         >
               <v-card-text>
-                <span v-html="selectedEvent.id"></span>
                 <span v-html="selectedEvent.work_type"></span>
               </v-card-text>
 

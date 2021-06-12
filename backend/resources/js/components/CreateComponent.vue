@@ -11,7 +11,11 @@
             <v-row>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="ルーム名" required v-model="work_type"></v-text-field>
+                <v-text-field label="作業" required v-model="work_type"></v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field label="ルーム名" required v-model="room_name"></v-text-field>
               </v-col>
 
 
@@ -60,6 +64,7 @@
         end : null,
         day : "",
         work_type : "",
+        room_name : "",
     }),
     methods:{
         open(date){
@@ -68,6 +73,7 @@
             this.start = null;
             this.end = null;
             this.work_type = "";
+            this.room_name = "";
         },
         save(){
             if( !this.isNotNull(this.start, this.end) ){
@@ -80,6 +86,7 @@
             }
             const params = {
               work_type : this.work_type,
+              room_name : this.room_name,
               start : this.day + ' ' + this.start,
               end : this.day + ' ' + this.end
             }

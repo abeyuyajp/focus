@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->string('work_type');
+            $table->string('room_name');
             $table->string('start');
             $table->string('end');
             

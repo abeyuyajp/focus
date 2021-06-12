@@ -13,7 +13,7 @@
                     <div class="card d-inline-block m-2" style="width: 23rem; border-radius: 20px;">
                         <div class="card-body">
                             <h3 class="card-title">{{ $post->user->name }}</h3>
-                            <!--p class="card-text text-muted">ルーム名：{{ $post->work_type }}</p-->
+                            <p class="card-text text-muted">作業：{{ $post->work_type }}</p>
                             <p class="card-text text-muted">
                                 <i class="far fa-clock"></i>
                                 {{ date('n月d日', strtotime($post->start)) }}&emsp;
