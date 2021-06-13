@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\Post;
 use App\Join;
@@ -10,6 +11,36 @@ use App\Notifications\PostJoinedWeb;
 
 class UserController extends Controller
 {
+    public function edit()
+    {
+        $user = Auth::user();
+        return view('auth.edit', ['user' => $user]);
+    }
+
+    public function update(Request $request)
+    {
+        $user = User::find($request->id);
+        
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'profile_image' => ['file', 'mimes: jpeg,png,jpg,bmp', 'max: 2048'],
+        ]);
+
+        //送られてきた画像を取得
+        $file = $request->file('profile_image');
+        //dd($file);
+        //画像が含まれていたら、
+        if(!empty($file)) {
+            $filename = $file->getClientOriginalName();
+            $move = $file->move('storage/image', $filename);
+            $user->profile_image = $filename;
+            $user->save();
+        }
+        $user->name = $request->name;
+        $user->save();
+        return redirect('/');
+    }
+
     public function notice_get(User $user)
     {
         

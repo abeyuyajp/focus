@@ -17,7 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//ユーザー
 Auth::routes();
+Route::get('/user/edit', 'UserController@edit')->name('user.edit');
+Route::put('/user/{user}', 'UserController@update')->name('user.update');
+
+
+//投稿
 Route::get('/', 'PostsController@index');
 Route::resource('/posts', 'PostsController',['except' => ['show', 'index', 'destroy']]);
 Route::get('/home', 'HomeController@index')->name('home');

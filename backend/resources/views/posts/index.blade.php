@@ -12,7 +12,16 @@
                     @if(strtotime(date('Y-m-d H:i')) < strtotime($post->end))
                     <div class="card d-inline-block m-2" style="width: 23rem; border-radius: 20px;">
                         <div class="card-body">
-                            <h3 class="card-title">{{ $post->user->name }}</h3>
+                            <div class="post_user_info d-flex">
+                                <div class="post_user_image pr-2">
+                                    @if(!empty($post->user->profile_image))
+                                        <img src="{{ asset('storage/image/' . $post->user->profile_image) }}"  width="45vw" height="45px" style="border-radius: 100%;">
+                                    @else
+                                        <i class="far fa-user-circle fa-3x"></i>
+                                    @endif
+                                </div>
+                                <h3 class="post_user_name card-title">{{ $post->user->name }}</h3>
+                            </div>
                             <p class="card-text text-muted">作業：{{ $post->work_type }}</p>
                             <p class="card-text text-muted">
                                 <i class="far fa-clock"></i>

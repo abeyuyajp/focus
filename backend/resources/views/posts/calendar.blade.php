@@ -48,7 +48,17 @@
                         @if(strtotime(date('Y-m-d H:i')) < strtotime($joinPostId->post->end))
                         <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px;">
                             <div class="card-body">
-                                <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
+                                <!-- 投稿したユーザーの画像と名前を表示 -->
+                                <div class="post_user_info d-flex">
+                                    <div class="post_user_image pr-2">
+                                        @if(!empty($joinPostId->post->user->profile_image))
+                                            <img src="{{ asset('storage/image/' . $joinPostId->post->user->profile_image) }}"  width="45vw" height="45px" style="border-radius: 100%;">
+                                        @else
+                                            <i class="far fa-user-circle fa-3x"></i>
+                                        @endif
+                                    </div>
+                                    <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
+                                </div>
                                 <p class="card-text text-muted">ルーム名：{{ $joinPostId->post->room_name }}</p>
                                 <p class="card-text text-muted">作業：{{ $joinPostId->post->work_type }}</p>
                                     <i class="far fa-clock"></i>

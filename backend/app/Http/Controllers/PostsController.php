@@ -115,6 +115,7 @@ class PostsController extends Controller
     {
         //自分がJoinした投稿を取得
         $joinPostIds = Join::where('from_user_id', Auth::user()->id)->get();
+
         //Joinされた投稿を取得
         $joinedPostIds = Join::where('to_user_id', Auth::user()->id)->get();
 
