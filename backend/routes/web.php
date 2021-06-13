@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,10 @@ Route::delete('/joins/delete', 'JoinController@destroy')->name('joins.destroy');
 
 //ビデオチャット
 Route::get('/video_chat', 'VideoChatController@index')->name('video_chat.index');
+
+//リアルタイムweb通知
+Route::get('/user/{user}/notice_get', 'UserController@notice_get')->name('notice_get');
+Route::put('/user/{user}/notice_checked', 'UserController@notice_checked')->name('notice_checked');
 
 
 

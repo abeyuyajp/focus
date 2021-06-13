@@ -26,6 +26,7 @@ Vue.use(Vuetify);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('calendar-component', require('./components/CalendarComponent.vue').default);
 Vue.component('create-component', require('./components/CreateComponent.vue').default);
+Vue.component('notification-component', require('./components/NotificationComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

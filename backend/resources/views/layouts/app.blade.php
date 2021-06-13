@@ -41,15 +41,19 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+                    @if (Auth::check() )
                     <ul class="navbar-nav ml-auto">
-                        <li class="dropdown">
+                        <notification-component :current_user="{{Auth::user()}}"></notification-component>
+                    @endif
+                        <!--li class="dropdown">
                             <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
                                 <li class="dropdown-header">No notifications</li>
                             </ul>
-                        </li>
+                        </li-->
+
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
