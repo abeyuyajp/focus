@@ -8,6 +8,7 @@ use App\User;
 use App\Post;
 use App\Join;
 use App\Notifications\PostJoinedWeb;
+use \InterventionImage;
 
 class UserController extends Controller
 {
@@ -28,11 +29,11 @@ class UserController extends Controller
 
         //送られてきた画像を取得
         $file = $request->file('profile_image');
-        //dd($file);
+        
         //画像が含まれていたら、
         if(!empty($file)) {
             $filename = $file->getClientOriginalName();
-            $move = $file->move('storage/image', $filename);
+            InterventionImage::make($file)->resize(100, 100)->save('storage/image/' . $filename);
             $user->profile_image = $filename;
             $user->save();
         }
