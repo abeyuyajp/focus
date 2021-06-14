@@ -90,6 +90,22 @@ class PostsController extends Controller
         return redirect('/')->with('message', '投稿を編集しました');
     }
 
+    public function search(Request $request)
+    {
+        //すでにJoinされた投稿を取得
+        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
+        
+        $posts = Post::where('work_type', 'like', "%{$request->work_type}%")
+                     ->where('start', 'like', "%{$request->start}%")
+                     ->whereNotIn('id',$joinedPostIds)
+                     ->orderBy('created_at', 'desc')
+                     ->get();
+
+        return view('posts.index', [
+            'posts'=>$posts,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

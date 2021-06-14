@@ -44,6 +44,9 @@ Route::get('/video_chat', 'VideoChatController@index')->name('video_chat.index')
 Route::get('/user/{user}/notice_get', 'UserController@notice_get')->name('notice_get');
 Route::put('/user/{user}/notice_checked', 'UserController@notice_checked')->name('notice_checked');
 
+//検索機能
+Route::get('/search', 'PostsController@search')->name('posts.search');
+
 
 
 

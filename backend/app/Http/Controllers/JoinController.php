@@ -57,7 +57,7 @@ class JoinController extends Controller
         #if(Auth::user()->id == $join->to_user_id) {
             #$from_user_deleted = Auth::user()->find($join->from_user_id);
             #\Notification::send($from_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
-        }#elseif(Auth::user()->id == $join->from_user_id){
+        #}elseif(Auth::user()->id == $join->from_user_id){
             #$to_user_deleted = Auth::user()->find($join->to_user_id);
             #\Notification::send($to_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
         #}

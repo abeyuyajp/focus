@@ -3,11 +3,16 @@
 @section('content')
 <div class="d-flex">
         <div class="col-10">
-            <!--div>
-                <a href="{{ url('posts/create') }}" class="btn">
-                    投稿する
-                </a>
-            </div-->
+            <!-- search -->
+            <form class="d-flex" action="{{route('posts.search')}}" method="get">
+                @csrf
+                <input type="text"  class="form-control" placeholder="作業：(例)プログラミング" name="work_type" style="border-radius: 10px;">
+                <input type="date"  class="form-control" name="start" style="border-radius: 10px;">
+                <button class="btn mb-3" type="submit" >
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <!-- end -->
                 @foreach($posts as $post)
                     @if(strtotime(date('Y-m-d H:i')) < strtotime($post->end))
                     <div class="card d-inline-block m-2" style="width: 23rem; border-radius: 20px;">
@@ -28,7 +33,7 @@
                                 {{ date('n月d日', strtotime($post->start)) }}&emsp;
                                 {{ date('H:i', strtotime($post->start)) }}〜{{ date('H:i', strtotime($post->end)) }}
                             </p>
-                            <!-- マッチングのリクエスト -->
+                            <!-- join bottom -->
                             <form action="{{ route('joins.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="to_user_id" value="{{ $post->user_id }}">
@@ -37,6 +42,7 @@
                                     <button class="btn d-block btn-primary" type="submit" style="margin: 0 auto; color: white;">ジョインする</button>
                                 @endif
                             </form>
+                            <!-- end -->
                         </div>
                     </div>
                     @endif
