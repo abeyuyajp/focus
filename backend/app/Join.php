@@ -12,6 +12,9 @@ class Join extends Model
         'from_user_id',
         'to_user_id',
         'post_id',
+        'post_start',
+        'post_end',
+        'post_work_type',
     ];
     
     public function post()

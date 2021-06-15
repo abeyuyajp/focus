@@ -44,7 +44,6 @@ class UserController extends Controller
 
     public function notice_get(User $user)
     {
-        
         $notices = $user->unreadNotifications()->limit(5)->get()->toArray();
         return $notices;
     }

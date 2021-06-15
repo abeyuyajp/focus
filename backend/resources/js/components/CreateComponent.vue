@@ -7,15 +7,18 @@
           <span class="headline">新規登録</span>
         </v-card-title>
         <v-card-text>
+          <v-form ref="test_form">
           <v-container>
             <v-row>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="作業" required v-model="work_type"></v-text-field>
+                <v-text-field label="作業" required v-model="work_type" :rules="[required]"></v-text-field>
+                
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="ルーム名" required v-model="room_name"></v-text-field>
+                <v-text-field label="ルーム名" required v-model="room_name" :rules="[required]"></v-text-field>
+                <v-text>※このルーム名はビデオチャット入室時に入力していただきます。</v-text>
               </v-col>
 
 
@@ -43,12 +46,12 @@
 
             </v-row>
           </v-container>
-        
+        </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false">閉じる</v-btn>
+          <v-btn color="blue darken-1" text @click="save">保存</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -65,6 +68,7 @@
         day : "",
         work_type : "",
         room_name : "",
+        required: value => !!value || "必ず入力してください"
     }),
     methods:{
         open(date){
@@ -76,6 +80,13 @@
             this.room_name = "";
         },
         save(){
+            if (this.$refs.test_form.validate()) {
+              this.success = true;
+              this.dialog = false;
+            }else {
+              this.success = false;
+            }
+            
             if( !this.isNotNull(this.start, this.end) ){
               console.log("nullです");
               return ;
@@ -90,8 +101,8 @@
               start : this.day + ' ' + this.start,
               end : this.day + ' ' + this.end
             }
-
-            console.log(params);
+            //保存ができたら投稿フォームを閉じる。
+            this.dialog = false;
 
             this.$emit('save',params);
         },

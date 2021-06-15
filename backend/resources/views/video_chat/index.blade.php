@@ -6,16 +6,17 @@
         <link rel="stylesheet" href="../_shared/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     </head>
-    <body style="background: linear-gradient(-135deg, #E4A972, #9941D8) fixed; color: white;">
+    <body style="background: linear-gradient(25deg, #331392, #4557ac, #4494c6, #16d3e0) fixed; color: white;">
         <div class="container">
-            <h1 class="heading">ビデオルーム</h1>
             <!--p class="note">
                 Change Room mode (before join in a room):
                 <a href="#">mesh</a> / <a href="#sfu">sfu</a>
             </p-->
-            <input type="text" placeholder="ルーム名" id="js-room-id">
+            <div style="margin: 5vh 0;">
+                <input type="text" placeholder="ルーム名" id="js-room-id" style="height: 3vh; width: 40vw; ">
                     <button id="js-join-trigger">Join</button>
                     <button id="js-leave-trigger">Leave</button>
+            </div>
             <div class="room">
                 <div>
                     <video id="js-local-stream"></video>
@@ -32,8 +33,9 @@
                 <div class="remote-streams" id="js-remote-streams"></div>
                 <div>
                     <pre class="messages" id="js-messages"></pre>
-                    <input type="text" id="js-local-text">
-                    <button id="js-send-trigger">Send</button>
+                    <input type="hidden" id="js-local-text">
+                    <!--button id="js-send-trigger"></button-->
+                    <input type="hidden" id="js-send-trigger">
                 </div>
             </div>
             <p class="meta" id="js-meta"></p>

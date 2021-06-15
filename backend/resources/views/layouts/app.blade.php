@@ -45,23 +45,15 @@
                     <ul class="navbar-nav ml-auto">
                         <notification-component :current_user="{{Auth::user()}}"></notification-component>
                     @endif
-                        <!--li class="dropdown">
-                            <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="glyphicon glyphicon-user"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
-                                <li class="dropdown-header">No notifications</li>
-                            </ul>
-                        </li-->
 
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <li class="nav-item" style="list-style: none;">
+                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li class="nav-item" style="list-style: none;">
+                                    <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -87,9 +79,10 @@
                 </div>
             </div>
         </nav>
+        @if (Auth::check() )
         <div class="container-fluid pl-0">
             <div class="row">
-                <nav id="sidebarMenu" class="col-1 d-md-block bg-navy sidebar collapse">
+                <nav id="sidebarMenu" class="col-1 d-md-block bg-navy sidebar collapse" style="height: 100vh position: fixed;">
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
                             <li class="nav-item mb-5 mt-5 text-center" >
@@ -104,8 +97,6 @@
                                     <p><strong>カレンダー</strong></p>
                                 </a>
                             </li>
-                            <!--プロフィール画像の表示-->
-                            @if (Auth::check() )
                             <li class="nav-item mb-5 mt-5 text-center">
                                 <a  class="text-white link-none" href="{{ url('/user/edit') }}">
                                     @if(!empty(Auth::user()->profile_image))
@@ -116,11 +107,11 @@
                                     <p class="lead text-white text-center">{{ Auth::user()->name }}</p>
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </div>
                 </nav>
-                <main class="col-md-9  py-4">
+                @endif
+                <main class="col-md-9 py-4">
                     @yield('content')
                 </main>
             </div>

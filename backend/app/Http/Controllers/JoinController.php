@@ -22,6 +22,9 @@ class JoinController extends Controller
         $join->from_user_id  =  Auth::user()->id;
         $join->to_user_id    =  $request->to_user_id;
         $join->post_id       =  $request->post_id;
+        $join->post_start       =  $request->post_start;
+        $join->post_end       =  $request->post_end;
+        $join->post_work_type       =  $request->post_work_type;
         $join->save();
 
         # ジョインされた人を取得(メールの宛先)
@@ -39,7 +42,7 @@ class JoinController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        
+    
         $join = Join::find($id);
         
         $join->delete();
@@ -54,13 +57,13 @@ class JoinController extends Controller
         #}
 
         #webでの通知
-        #if(Auth::user()->id == $join->to_user_id) {
-            #$from_user_deleted = Auth::user()->find($join->from_user_id);
-            #\Notification::send($from_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
-        #}elseif(Auth::user()->id == $join->from_user_id){
-            #$to_user_deleted = Auth::user()->find($join->to_user_id);
-            #\Notification::send($to_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
-        #}
+        if(Auth::user()->id == $join->to_user_id) {
+            $from_user_deleted = Auth::user()->find($join->from_user_id);
+            \Notification::send($from_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
+        }elseif(Auth::user()->id == $join->from_user_id){
+            $to_user_deleted = Auth::user()->find($join->to_user_id);
+            \Notification::send($to_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
+        }
 
         return redirect('/calendar');
     }

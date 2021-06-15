@@ -26,7 +26,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@mdi/font": "^5.9.55",
         "moment": "^2.29.1",
+        "vue-infinite-loading": "^2.4.5",
         "vuetify": "^2.5.3",
         "vuex": "^3.6.2"
     }

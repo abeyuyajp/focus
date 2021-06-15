@@ -28,7 +28,9 @@ class PostsController extends Controller
         $joinedPostIds = Join::all()->pluck('post_id')->toArray();
 
         //Joinされている投稿IDは全て排除して取得
-        $posts = Post::orderBy('created_at', 'desc')->whereNotIn('id',$joinedPostIds)->get();
+        $posts = Post::orderBy('start', 'asc')
+                    ->whereNotIn('id',$joinedPostIds)
+                    ->paginate(12);
         
         return view('posts.index', compact('posts'));
     }
@@ -99,7 +101,7 @@ class PostsController extends Controller
                      ->where('start', 'like', "%{$request->start}%")
                      ->whereNotIn('id',$joinedPostIds)
                      ->orderBy('created_at', 'desc')
-                     ->get();
+                     ->paginate(12);
 
         return view('posts.index', [
             'posts'=>$posts,
@@ -121,28 +123,32 @@ class PostsController extends Controller
         }
     }
 
-    public function getAllEvent(){
+    public function getAllEvent()
+    {
+        //自分がジョインしたpost_idを取得
+        $joinId = Join::where('from_user_id', Auth::user()->id)
+                            ->pluck('post_id')
+                            ->toArray();
+
+        //自分の投稿または、ジョインしたpost_idを取得
         $calendars = Post::where('user_id', Auth::user()->id)
-            ->get();
+                         ->orWhereIn('id', $joinId)
+                         ->get();
+
+        //$calendars = Post::where('user_id', Auth::user()->id)
+                            //->get();
+
         return $calendars;
     }
 
     public function showCalendar()
     {
-        //自分がJoinした投稿を取得
-        $joinPostIds = Join::where('from_user_id', Auth::user()->id)->get();
+        $joinPostIds = Join::orderBy('post_start', 'asc')
+                            ->where('from_user_id', Auth::user()->id)
+                            ->orWhere('to_user_id', Auth::user()->id)
+                            ->paginate(4);
 
-        //Joinされた投稿を取得
-        $joinedPostIds = Join::where('to_user_id', Auth::user()->id)->get();
-
-        //自分の全ての投稿IDを取得
-        #$posts = Post::where('user_id', Auth::user()->id)->pluck('id')->ToArray();
-        
-        //Joinされた自分の全ての投稿IDを取得
-        #$joinedPostIds = Join::whereIn('post_id', $posts)->get();
-
-        
-        return view('posts.calendar',['joinPostIds' => $joinPostIds, 'joinedPostIds' => $joinedPostIds]);
+        return view('posts.calendar',['joinPostIds' => $joinPostIds]);
     }
 
 }

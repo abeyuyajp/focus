@@ -7,18 +7,10 @@
 
 <v-sheet height="64">
   <v-toolbar flat>
-    <v-btn
-      outlined
-      class="mr-4"
-      color="grey darken-2"
-      @click="setToday"
-    >
-      Today
-    </v-btn>
+    
     <v-btn
       icon
       class="ma-2"
-      color="blue"
       @click="prev"
     >
       <v-icon>mdi-chevron-left</v-icon>
@@ -26,7 +18,6 @@
     <v-btn
       icon
       class="ma-2"
-      color="blue"
       @click="next"
     >
       <v-icon>mdi-chevron-right</v-icon>
@@ -50,13 +41,13 @@
       </template>
       <v-list>
         <v-list-item @click="type = 'day'">
-          <v-list-item-title>Day</v-list-item-title>
+          <v-list-item-title>日</v-list-item-title>
         </v-list-item>
         <v-list-item @click="type = 'week'">
-          <v-list-item-title>Week</v-list-item-title>
+          <v-list-item-title>週</v-list-item-title>
         </v-list-item>
         <v-list-item @click="type = 'month'">
-          <v-list-item-title>Month</v-list-item-title>
+          <v-list-item-title>月</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -135,6 +126,7 @@ import moment from 'moment';
       
     },
     mounted () {
+        //自分の投稿を取得
         this.getAllEvent();
         axios.get('/get/calendar')
           .then( res => {
@@ -155,10 +147,6 @@ import moment from 'moment';
           this.$refs.form.open(date);
         },
 
-        setToday () {
-          this.focus = this.today
-        },
-
         //前の月
         prev(){
           this.$refs.calendar.prev()
@@ -173,7 +161,7 @@ import moment from 'moment';
         async saveEvent(params){
           await axios.post('/posts', params)
             .then( res => {
-              console.log(res);
+              alert("セッションの投稿が完了しました。");
             })
             .catch( e => {
               console.log(e);
@@ -181,7 +169,6 @@ import moment from 'moment';
             .finally( () => {
                this.getAllEvent();
             })
-          console.log("保存しました。");
         },
 
         clickEvent( {nativeEvent, event} ){
