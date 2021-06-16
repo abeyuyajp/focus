@@ -20,8 +20,8 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+
         $user = User::find($request->id);
-        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'profile_image' => ['file', 'mimes: jpeg,png,jpg,bmp', 'max: 2048'],
