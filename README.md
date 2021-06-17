@@ -1,4 +1,6 @@
 # focus
+![focus](https://user-images.githubusercontent.com/76641435/122337361-3610df80-cf79-11eb-9700-844a176dd63d.png)
+
 * URL : https://focus-yuyaabe.herokuapp.com/
 * ログインユーザー
   * E-mail : test@example
