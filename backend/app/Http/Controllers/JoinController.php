@@ -28,8 +28,8 @@ class JoinController extends Controller
         $join->save();
 
         # ジョインされた人を取得(メールの宛先)
-        # $joined_user = Auth::user()->find($join->to_user_id);
-        # \Notification::send($joined_user, new \App\Notifications\PostJoined(\Auth::user()->name));
+        $joined_user = Auth::user()->find($join->to_user_id);
+        \Notification::send($joined_user, new \App\Notifications\PostJoined(\Auth::user()->name));
 
         # ジョインされた人を取得（通知先）
         $joined_user = Auth::user()->find($join->to_user_id);
@@ -48,22 +48,22 @@ class JoinController extends Controller
         $join->delete();
 
         # from_user_idがキャンセルした場合
-        #if(Auth::user()->id == $join->to_user_id) {  
-            #$from_user_deleted = Auth::user()->find($join->from_user_id);
-            #\Notification::send($from_user_deleted, new \App\Notifications\FromUserDeleted(\Auth::user()->name));
-        #}elseif(Auth::user()->id == $join->from_user_id) {  
-            #$to_user_deleted = Auth::user()->find($join->to_user_id);
-            #\Notification::send($to_user_deleted, new \App\Notifications\ToUserDeleted(\Auth::user()->name));
-        #}
+        if(Auth::user()->id == $join->to_user_id) {  
+            $from_user_deleted = Auth::user()->find($join->from_user_id);
+            \Notification::send($from_user_deleted, new \App\Notifications\FromUserDeleted(\Auth::user()->name));
+        }elseif(Auth::user()->id == $join->from_user_id) {  
+            $to_user_deleted = Auth::user()->find($join->to_user_id);
+            \Notification::send($to_user_deleted, new \App\Notifications\ToUserDeleted(\Auth::user()->name));
+        }
 
         #webでの通知
-        if(Auth::user()->id == $join->to_user_id) {
-            $from_user_deleted = Auth::user()->find($join->from_user_id);
-            \Notification::send($from_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
-        }elseif(Auth::user()->id == $join->from_user_id){
-            $to_user_deleted = Auth::user()->find($join->to_user_id);
-            \Notification::send($to_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
-        }
+        #if(Auth::user()->id == $join->to_user_id) {
+            #$from_user_deleted = Auth::user()->find($join->from_user_id);
+            #\Notification::send($from_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
+        #}elseif(Auth::user()->id == $join->from_user_id){
+            #$to_user_deleted = Auth::user()->find($join->to_user_id);
+            #\Notification::send($to_user_deleted, new \App\Notifications\FromUserDeletedWeb(\Auth::user()->name));
+        #}
 
         return redirect('/calendar');
     }
