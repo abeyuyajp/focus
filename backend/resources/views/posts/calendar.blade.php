@@ -13,6 +13,7 @@
                 <!-- joinしたorされた投稿を表示 -->
                 <div class="col-3">
                     <h4>予定</h4>
+                    <p class="text-muted">※ルーム名を入力して入室してください。</p>
                     @foreach($joinPostIds as $joinPostId)
                         <!-- 終了時刻以降の投稿は表示しない -->
                         @if(strtotime(date('Y-m-d H:i')) < strtotime($joinPostId->post_end))
@@ -31,7 +32,7 @@
                                     <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
                                 </div>
                                 <!-- end -->
-                                <p class="card-text text-muted">ルーム名：{{ $joinPostId->post->room_name }}</p>
+                                <p class="card-text"><strong>ルーム名：{{ $joinPostId->post->room_name }}</strong></p>
                                 <p class="card-text text-muted">作業：{{ $joinPostId->post_work_type }}</p>
                                     <i class="far fa-clock"></i>
                                     {{ date('n月d日', strtotime($joinPostId->post_start)) }}&emsp;

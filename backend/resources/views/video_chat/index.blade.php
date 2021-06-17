@@ -13,9 +13,9 @@
                 <a href="#">mesh</a> / <a href="#sfu">sfu</a>
             </p-->
             <div style="margin: 5vh 0;">
-                <input type="text" placeholder="ルーム名" id="js-room-id" style="height: 3vh; width: 40vw; ">
-                    <button id="js-join-trigger">Join</button>
-                    <button id="js-leave-trigger">Leave</button>
+                <input type="text" placeholder="ルーム名を入力してください" id="js-room-id" style="height: 3vh; width: 40vw; ">
+                    <button id="js-join-trigger">入室</button>
+                    <button id="js-leave-trigger">退室</button>
             </div>
             <div class="room">
                 <div>
