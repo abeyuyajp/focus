@@ -22,26 +22,23 @@
               </v-col>
 
 
-              <v-col cols="6" sm="6" md="6">
                 <v-chip
                     class="ma-2"
                     label
                 >
                     Start
                 </v-chip>
-                <v-time-picker v-model="start" width="252"></v-time-picker>
-              </v-col>
+                <v-time-picker v-model="start" ></v-time-picker>
+              
 
-
-              <v-col cols="6" sm="6" md="6">
                 <v-chip
                     class="ma-2"
                     label
                 >
                     End
                 </v-chip>
-                <v-time-picker v-model="end" width="252"></v-time-picker>
-              </v-col>
+                <v-time-picker v-model="end" ></v-time-picker>
+              
 
 
             </v-row>

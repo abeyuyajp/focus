@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex">
-        <div class="col-12">
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm">
+
             <!-- search -->
             <form class="d-flex" action="{{route('posts.search')}}" method="get">
                 @csrf
@@ -13,8 +15,9 @@
                 </button>
             </form>
             <!-- end -->
-                @foreach($posts as $post)
-                    @if(strtotime(date('Y-m-d H:i')) < strtotime($post->end))
+
+            @foreach($posts as $post)
+                @if(strtotime(date('Y-m-d H:i')) < strtotime($post->end))
                     <div class="card d-inline-block m-2" style="width: 23rem; border-radius: 20px;">
                         <div class="card-body">
                             <div class="post_user_info d-flex">
@@ -48,15 +51,17 @@
                             <!-- end -->
                         </div>
                     </div>
-                    @endif
-                @endforeach
-                <!--ページネーション-->
-                <div class="mx-auto mt-4" style="width: 150px; margin-bottom: 20vh">
-                    <div class="col-md-4">
-                        {{ $posts->appends(request()->input())->links() }}
-                    </div>
+                @endif
+            @endforeach
+            
+            <!--ページネーション-->
+            <div class="mx-auto mt-4" style="width: 150px; margin-bottom: 20vh">
+                <div class="col-md-4">
+                    {{ $posts->appends(request()->input())->links() }}
                 </div>
+            </div>
                 
         </div>
+    </div>
 </div>
 @endsection
