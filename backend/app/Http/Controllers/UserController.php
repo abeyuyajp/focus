@@ -10,6 +10,7 @@ use App\Join;
 use App\Notifications\PostJoinedWeb;
 use \InterventionImage;
 use Intervention\Image\Facades\Image; 
+use Storage;
 
 class UserController extends Controller
 {
@@ -33,10 +34,18 @@ class UserController extends Controller
 
         //画像が含まれていたら、
         if(!empty($file)) {
-            $filename = $file->getClientOriginalName();
-            InterventionImage::make($file)->resize(100, 100)->save(storage_path('app/public/image/'.$filename));
-            $user->profile_image = $filename;
-            $user->save();
+             //画像の拡張子を取得
+             $extension = $request->file('profile_image')->getClientOriginalExtension();
+             //画像の名前を取得
+             $filename = $request->file('profile_image')->getClientOriginalName();
+             //画像をリサイズ
+             $resize_img = InterventionImage::make($file)->resize(100, 100)->encode($extension);
+             //s3に保存
+             $path = Storage::disk('s3')->put('/'.$filename , (string)$resize_img, 'public');
+             //画像のURLを参照
+             $user->profile_image = Storage::disk('s3')->url($filename);
+             //DBに保存
+             $user->save();
         }
         $user->name = $request->name;
         $user->save();

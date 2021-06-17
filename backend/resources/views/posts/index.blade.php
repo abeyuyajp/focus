@@ -20,7 +20,7 @@
                             <div class="post_user_info d-flex">
                                 <div class="post_user_image pr-2">
                                     @if(!empty($post->user->profile_image))
-                                        <img src="{{ asset('storage/image/' . $post->user->profile_image) }}"  width="45vw" height="45px" style="border-radius: 100%;">
+                                        <img src="{{ $post->user->profile_image }}"  width="45vw" height="45px" style="border-radius: 100%;">
                                     @else
                                         <i class="far fa-user-circle fa-3x"></i>
                                     @endif

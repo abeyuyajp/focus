@@ -100,7 +100,7 @@
                             <li class="nav-item mb-5 mt-5 text-center">
                                 <a  class="text-white link-none" href="{{ url('/user/edit') }}">
                                     @if(!empty(Auth::user()->profile_image))
-                                        <img src="{{ asset('storage/image/' . Auth::user()->profile_image) }}"  width="45vw" height="45px" style="border-radius: 100%;">
+                                        <img src="{{ Auth::user()->profile_image }}"  width="45vw" height="45px" style="border-radius: 100%;">
                                     @else
                                         <i class="far fa-user-circle fa-3x"></i>
                                     @endif
