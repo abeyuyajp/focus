@@ -6,20 +6,29 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Auth;
+use App\Post;
+use App\Join;
 
 class FromUserDeletedWeb extends Notification
 {
     use Queueable;
-    protected $from_user_name;
+    protected $from_user_deleted_name;
+    protected $deleted_post_start;
+    protected $deleted_post_end;
+    protected $post_id;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($from_user_name)
+    public function __construct($from_user_deleted_name, $deleted_post_start, $deleted_post_end, $post_id)
     {
-        $this->from_user_name = $from_user_name;
+        $this->from_user_deleted_name = $from_user_deleted_name;
+        $this->deleted_post_start = $deleted_post_start;
+        $this->deleted_post_end = $deleted_post_end;
+        $this->post_id = $post_id;
     }
 
     /**
@@ -50,7 +59,10 @@ class FromUserDeletedWeb extends Notification
     public function toDatabase($notifiable)
     {
         return[
-            'from_user_name' => $this->from_user_name,
+            'from_user_deleted_name' => $this->from_user_deleted_name,
+            'deleted_post_start' => $this->deleted_post_start,
+            'deleted_post_end' => $this->deleted_post_end,
+            'post_id' => $this->post_id,
             'status' => false,
         ];
     }

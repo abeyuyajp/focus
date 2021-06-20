@@ -15,16 +15,21 @@ class PostJoinedWeb extends Notification
     use Queueable;
     protected $from_user_name;
     protected $joined_created_at;
-
+    protected $joined_post_start;
+    protected $joined_post_end;
+    protected $post_id;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($from_user_name, $joined_created_at)
+    public function __construct($from_user_name, $joined_created_at, $joined_post_start, $joined_post_end, $post_id)
     {
         $this->from_user_name = $from_user_name;
         $this->joined_created_at = $joined_created_at;
+        $this->joined_post_start = $joined_post_start;
+        $this->joined_post_end = $joined_post_end;
+        $this->post_id = $post_id;
     }
 
     /**
@@ -50,6 +55,9 @@ class PostJoinedWeb extends Notification
         return[
             'from_user_name'  =>  $this->from_user_name,
             'joined_created_at'  =>  $this->joined_created_at,
+            'joined_post_start' => $this->joined_post_start,
+            'joined_post_end' => $this->joined_post_end,
+            'post_id' => $this->post_id,
             'status' => false,
         ];
     }

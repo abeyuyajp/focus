@@ -63,6 +63,12 @@ class PostsController extends Controller
         return redirect('/')->with('message', '投稿が完了しました');
     }
 
+    public function show(Request $request, $id)
+    {
+        $post = Post::find($id);
+        return view ('posts.show', compact('post'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

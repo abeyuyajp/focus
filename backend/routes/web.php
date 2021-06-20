@@ -25,7 +25,7 @@ Route::put('/user/{user}', 'UserController@update')->name('user.update');
 
 //投稿
 Route::get('/', 'PostsController@index');
-Route::resource('/posts', 'PostsController',['except' => ['show', 'index', 'destroy']]);
+Route::resource('/posts', 'PostsController',['except' => [ 'index', 'destroy']]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 //カレンダー
@@ -44,6 +44,9 @@ Route::get('/video_chat', 'VideoChatController@index')->name('video_chat.index')
 //リアルタイムweb通知
 Route::get('/user/{user}/notice_get', 'UserController@notice_get')->name('notice_get');
 Route::put('/user/{user}/notice_checked', 'UserController@notice_checked')->name('notice_checked');
+Route::get('/user/{user}/notice_index', 'UserController@notice_index')->name('notice_index');
+Route::get('/user/{user}/notice_all_get', 'UserController@notice_all_get')->name('notice_all_get');
+
 
 //検索機能
 Route::get('/search', 'PostsController@search')->name('posts.search');

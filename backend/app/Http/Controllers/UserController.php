@@ -58,11 +58,20 @@ class UserController extends Controller
         return $notices;
     }
 
-    public function notice_checked(Request $request)
+    public function notice_index(User $user)
     {
-        //ログインしているユーザーを取得
-        $user = Auth::user()->id;
+        return view('notifications.index');
+    }
 
+    public function notice_all_get(User $user)
+    {
+        $notices = $user->unreadNotifications()->get()->toArray();
+        return $notices;
+    }
+
+
+    public function notice_checked(User $user, Request $request)
+    {
         //ログインユーザーに紐づくチェックしていないnotificationを取得
         $notice = $user->unreadNotifications()->where('id', $request->id)->first();
 
