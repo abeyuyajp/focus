@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function notice_all_get(User $user)
     {
-        $notices = $user->unreadNotifications()->get()->toArray();
+        $notices = $user->notifications()->get()->toArray();
         return $notices;
     }
 

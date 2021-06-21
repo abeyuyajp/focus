@@ -141,11 +141,17 @@ class PostsController extends Controller
                          ->orWhereIn('id', $joinId)
                          ->get();
 
-        //$calendars = Post::where('user_id', Auth::user()->id)
-                            //->get();
-
         return $calendars;
     }
+
+    //public function getJoinEvent()
+    //{
+        //$join_event = Join::where('from_user_id', Auth::user()->id)
+                          //->orWhere('to_user_id', Auth::user()->id)
+                          //->get();
+
+        //return $join_event;
+    //}
 
     public function showCalendar()
     {

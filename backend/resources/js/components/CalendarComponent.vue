@@ -68,11 +68,11 @@
       @click:day="createEvent"
   ></v-calendar>
 </v-sheet>
-<v-menu
+    <v-menu
         v-model="eventAlert"
         :close-on-content-click="false"
         :activator="selectedItem"
-      >
+    >
         <v-card
           color="grey lighten-4"
           min-width="350px"
