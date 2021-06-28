@@ -33,7 +33,9 @@
                                         <i class="far fa-user-circle fa-3x"></i>
                                     @endif
                                 </div>
-                                <h3 class="card-title">{{ $joinPostId->post->user->name }}</h3>
+                                <a href="{{ url('/user', $joinPostId->post->user->id) }}" class="card-title text-muted" style="font-size: 28px; color: black; text-decoration: none;">
+                                    {{ $joinPostId->post->user->name }}
+                                </a>
                             </div>
 
                             <!-- ルーム名 -->

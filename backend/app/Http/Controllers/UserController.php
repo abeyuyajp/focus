@@ -14,6 +14,12 @@ use Storage;
 
 class UserController extends Controller
 {
+    public function show(Request $request, $id)
+    {
+        $user = User::find($id);
+        return view('auth.show', ['user' => $user]);
+    }
+
     public function edit()
     {
         $user = Auth::user();
@@ -48,8 +54,10 @@ class UserController extends Controller
              $user->save();
         }
         $user->name = $request->name;
+        $user->work = $request->work;
+        $user->purpose = $request->purpose;
         $user->save();
-        return redirect('/');
+        return redirect('user/' . $user->id);
     }
 
     public function notice_get(User $user)

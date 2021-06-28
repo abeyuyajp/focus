@@ -27,7 +27,9 @@
                                 <i class="far fa-user-circle fa-3x"></i>
                             @endif
                         </div>
-                        <h3 class="post_user_name card-title">{{ $post->user->name }}</h3>
+                        <a href="{{ url('/user', $post->user->id) }}" class="card-title text-muted" style="font-size: 28px; color: black; text-decoration: none;">
+                            {{ $post->user->name }}
+                        </a>
                     </div>
                     <p class="card-text text-muted">作業：{{ $post->work_type }}</p>
                     <p class="card-text text-muted">

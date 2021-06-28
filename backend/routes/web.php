@@ -21,6 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/user/edit', 'UserController@edit')->name('user.edit');
 Route::put('/user/{user}', 'UserController@update')->name('user.update');
+Route::get('/user/{user}', 'UserController@show')->name('user.show');
 
 
 //投稿
