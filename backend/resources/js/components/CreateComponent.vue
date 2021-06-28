@@ -13,7 +13,6 @@
 
               <v-col cols="12" sm="12" md="12">
                 <v-text-field label="作業" required v-model="work_type" :rules="[required]"></v-text-field>
-                
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
