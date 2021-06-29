@@ -55,13 +55,13 @@
 
                               <!-- セッション一覧 -->
                               <li class="nav-item ml-auto">
-                                  <a class="nav-link text-white" href="{{ url('/') }}">セッション</a>
+                                  <a class="nav-link text-white" href="{{ url('/') }}">探す</a>
                               </li>
                               <!-- end -->
 
                               <!-- カレンダー -->
                               <li class="nav-item ml-auto">
-                                  <a class="nav-link text-white" href="{{ url('/calendar') }}">予定</a>
+                                  <a class="nav-link text-white" href="{{ url('/calendar') }}">スケジュール</a>
                               </li>
                               <!-- end -->
 

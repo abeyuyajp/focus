@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
+Route::get('home', function () {
     return view('welcome');
 });
 
@@ -27,7 +27,7 @@ Route::get('/user/{user}', 'UserController@show')->name('user.show');
 //投稿
 Route::get('/', 'PostsController@index');
 Route::resource('/posts', 'PostsController',['except' => [ 'index', 'destroy']]);
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //カレンダー
 Route::get('/get/calendar', 'PostsController@getAllEvent');
