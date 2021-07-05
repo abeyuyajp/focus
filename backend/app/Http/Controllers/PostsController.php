@@ -132,13 +132,16 @@ class PostsController extends Controller
     public function getAllEvent()
     {
         //自分がジョインしたpost_idを取得
-        $joinId = Join::where('from_user_id', Auth::user()->id)
-                            ->pluck('post_id')
-                            ->toArray();
+        //$joinId = Join::where('from_user_id', Auth::user()->id)
+                            //->pluck('post_id')
+                            //->toArray();
 
         //自分の投稿または、ジョインしたpost_idを取得
+        //$calendars = Post::where('user_id', Auth::user()->id)
+                         //->orWhereIn('id', $joinId)
+                         //->get();
+
         $calendars = Post::where('user_id', Auth::user()->id)
-                         ->orWhereIn('id', $joinId)
                          ->get();
 
         return $calendars;

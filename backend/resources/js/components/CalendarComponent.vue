@@ -15,6 +15,7 @@
     >
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
+
     <v-btn
       icon
       class="ma-2"
@@ -22,10 +23,13 @@
     >
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
+
     <v-toolbar-title v-if="$refs.calendar">
       {{ $refs.calendar.title }}
     </v-toolbar-title>
+
     <v-spacer></v-spacer>
+
     <v-menu bottom right>
       <template v-slot:activator="{ on }">
         <v-btn
@@ -39,6 +43,7 @@
           </v-icon>
         </v-btn>
       </template>
+
       <v-list>
         <v-list-item @click="type = 'day'">
           <v-list-item-title>日</v-list-item-title>
@@ -50,9 +55,12 @@
           <v-list-item-title>月</v-list-item-title>
         </v-list-item>
       </v-list>
+
     </v-menu>
   </v-toolbar>
 </v-sheet>
+
+
 <v-sheet height="80vh">
   <v-calendar
       ref="calendar"
@@ -102,6 +110,9 @@
 
   </div>
 </template>
+
+
+
 
 <script>
 import moment from 'moment';

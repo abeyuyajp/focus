@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../_shared/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+        <!-- Bootstrap -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <!-- カスタマイズ -->
+        <link href="{{ asset('css/style.css')}}" rel="stylesheet">
     </head>
     <body style="background: linear-gradient(25deg, #331392, #4557ac, #4494c6, #16d3e0) fixed; color: white;">
         <div class="container">
@@ -20,13 +24,35 @@
             <div class="room">
                 <div>
                     <video id="js-local-stream"></video>
-                    <i class="fas fa-microphone fa-2x"></i>
-                    <button id="audio-mute">OFF</button>
-                    <button id="audio-on">ON</button>
 
-                    <i class="fas fa-desktop fa-2x"></i>
-                    <button id="video-mute">OFF</button>
-                    <button id="video-on">ON</button>
+                    <!-- app.scssでスタイル調整してる -->
+                    <div class="row">
+                        <div class="audio">
+                            <input type="radio" class="radio" id="audio-mute" name="btn" checked="checked" />
+                            <label class="btn btn-close" for="audio-mute">
+                                <i class="fas fa-microphone fa-2x" style="color: white;"></i>
+                            </label>
+
+                            <input type="radio" class="radio" id="audio-on" name="btn" />
+                            <label class="btn btn-open" for="audio-on">
+                                <i class="fas fa-microphone-slash fa-2x" style="color: white;"></i>
+                            </label>
+                        </div>
+
+                        <!-- app.scssでスタイル調整してる -->
+                        <div class="video">
+                            <input type="radio" class="radio" id="video-mute" name="video" checked="checked" />
+                            <label class="video video-mute" for="video-mute">
+                                <i class="fas fa-video fa-2x"></i>
+                            </label>
+
+                            <input type="radio" class="radio" id="video-on" name="video" />
+                            <label class="video video-on" for="video-on">
+                                <i class="fas fa-video-slash fa-2x"></i>
+                            </label>
+                        </div>
+                    </div>
+
                     <span id="js-room-mode"  style="visibility:hidden"></span>
                 </div>
 
@@ -43,8 +69,6 @@
         <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.1.js"></script>
     </body>
 </html>
-
-
 
 
 <script>

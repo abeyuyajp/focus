@@ -7,8 +7,8 @@
     <ul v-for="val in notice" :key="val.id" style="list-style: none; background-color: white; border-radius: 20px;" class="mb-1 px-4">
         <li v-if="val.data.from_user_name">
             <a href="#" @click="post_url(val, val.data.post_id)" style="text-decoration: none; color: black;">
+                <i class="fas fa-user-plus fa-lg" style="color: #28a745"></i>
                 <p>
-                    <i class="fas fa-user-plus" style="color: #c0c0c0;"></i>
                     {{ val.data.from_user_name }}さんがあなたのセッションにジョインしました。
                 </p>
                 <p>
@@ -22,8 +22,8 @@
         </li>
         <li v-if="val.data.from_user_deleted_name">
             <a href="#" @click="post_url(val, val.data.post_id)"style="text-decoration: none; color: black;">
+                <i class="fas fa-user-times fa-lg" style="color: rgb(234, 63, 96)"></i>
                 <p>
-                    <i class="fas fa-user-times" style="color: #c0c0c0;"></i>
                     {{ val.data.from_user_deleted_name }}さんがあなたとのセッションをキャンセルしました。
                 </p>
                 <p>

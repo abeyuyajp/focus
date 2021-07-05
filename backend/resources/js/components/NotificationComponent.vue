@@ -19,28 +19,28 @@
             <ul v-for="val in notice" :key="val.id" style="list-style: none;" class="mb-1 px-3">
                 <li v-if="val.data.from_user_name">
                     <a v-if="val.data.status" class="dropdown-item already-check-color" href="#" @click="post_url(val, val.data.post_id)">
+                        <i class="fas fa-user-plus fa-lg" style="color: #28a745"></i>
                         <p>
-                            <i class="fas fa-user-plus" style="color: #c0c0c0;"></i>
                             {{ val.data.from_user_name }}さんがあなたのセッションにジョインしました。
                         </p>
                         <p>
                             <i class="far fa-clock" style="color: #c0c0c0;"></i>
                             {{ val.data.joined_post_start | moment2 }}~{{ val.data.joined_post_end | moment3 }}
                         </p>
-                        <p>
+                        <p class="text-muted mt-2">
                             {{ val.data.joined_created_at | moment }}
                         </p>
                     </a>
                     <a v-else class="dropdown-item not-check-color" href="#" @click="post_url(val, val.data.post_id)">
+                        <i class="fas fa-user-plus fa-lg" style="color: #28a745"></i>
                         <p>
-                            <i class="fas fa-user-plus" style="color: #c0c0c0;"></i>
                             {{ val.data.from_user_name }}さんがあなたのセッションにジョインしました。
                         </p>
                         <p>
                             <i class="far fa-clock" style="color: #c0c0c0;"></i>
                             {{ val.data.joined_post_start | moment2 }}~{{ val.data.joined_post_end | moment3 }}
                         </p>
-                        <p>
+                        <p class="text-muted mt-2">
                             {{ val.data.joined_created_at | moment }}
                         </p>
                     </a>
@@ -49,33 +49,37 @@
 
                 <li v-if="val.data.from_user_deleted_name">
                     <a v-if="val.data.status" class="dropdown-item already-check-color" href="#" @click="post_url(val, val.data.post_id)">
+                        <i class="fas fa-user-times fa-lg" style="color: rgb(234, 63, 96)"></i>
                         <p>
-                            <i class="fas fa-user-times" style="color: #c0c0c0;"></i>
                             {{ val.data.from_user_deleted_name }}さんがあなたとのセッションをキャンセルしました。
                         </p>
                         <p>
                             <i class="far fa-clock" style="color: #c0c0c0;"></i>
                             {{ val.data.deleted_post_start | moment2 }}~{{ val.data.deleted_post_end | moment3 }}
                         </p>
-                        <p>
+                        <p class="text-muted mt-2">
                             {{ val.data.created_at | moment }}
                         </p>
                     </a>
                     <a v-else class="dropdown-item not-check-color" href="#" @click="post_url(val, val.data.post_id)">
+                        <i class="fas fa-user-times fa-lg" style="color: rgb(234, 63, 96)"></i>
                         <p>
-                            <i class="fas fa-user-times" style="color: #c0c0c0;"></i>
                             {{ val.data.from_user_deleted_name }}さんがあなたとのセッションをキャンセルしました。
                         </p>
                         <p>
                             <i class="far fa-clock" style="color: #c0c0c0;"></i>
                             {{ val.data.deleted_post_start | moment2 }}~{{ val.data.deleted_post_end | moment3 }}
                         </p>
-                        <p>
+                        <p class="text-muted mt-2">
                             {{ val.data.created_at | moment }}
                         </p>
                     </a>
                 </li>
+
+                <hr>
+
             </ul>
+
             <div>
                 <a class="dropdown-item text-center text-secondary" href="#" @click="index_url()">
                     <small>全てのお知らせを見る</small>
@@ -157,11 +161,11 @@ export default {
 
 <style scoped>
 .not-check-color {
-  background-color: #DDEEFF;
+  background-color: white;
 }
 
 .already-check-color {
-  background-color: #f7f7f7;
+  background-color: white;
 }
 
 .not-check-icon {

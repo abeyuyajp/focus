@@ -48,7 +48,7 @@
                                 <input type="hidden" name="post_end" value="{{ $post->end }}">
                                 <input type="hidden" name="post_work_type" value="{{ $post->work_type }}">
                                 @unless(Auth::id() == $post->user_id)
-                                    <button class="btn d-block btn-primary" type="submit" style="margin: 0 auto; color: white;">ジョインする</button>
+                                    <button class="btn d-block btn-primary" type="submit" style="margin: 0 auto; color: white;"><strong>ジョインする</strong></button>
                                 @endif
                             </form>
                             <!-- end -->

@@ -33,7 +33,7 @@
                             <label for="title" class="control-label">今月の目標は何ですか？</label>
                             <input class="form-control" name="purpose" type="text" value="{{ old('purpose', $user->purpose) }}" style="border-radius: 20px;">
                         </div>
-                        <button class="btn btn-primary d-block" type="submit" style="margin: 0 auto;">更新</button>
+                        <button class="btn btn-primary d-block mt-5" type="submit" style="margin: 0 auto; color: white;"><strong>更新する</strong></button>
                         <input type="hidden" name="id" value="{{$user->id}}">
                     </form>
                 </div>

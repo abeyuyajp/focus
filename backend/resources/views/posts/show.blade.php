@@ -17,7 +17,7 @@
 
         <!-- 詳細 -->
         <div class="col-md-5">
-            <div class="card d-inline-block m-2" style="width: 23rem; border-radius: 20px;">
+            <div class="card d-inline-block m-2" style="width: 20rem; border-radius: 20px;">
                 <div class="card-body">
                     <div class="post_user_info d-flex">
                         <div class="post_user_image pr-2">

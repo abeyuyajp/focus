@@ -6,3 +6,54 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+
+.radio {
+  display: none;
+}
+#audio-mute {
+  &:checked {
+    ~ .btn-close {
+      display: none;
+    }
+    ~ .btn-open {
+      display: table;
+    }
+  }
+}
+#audio-on {
+  &:checked {
+    ~ .btn-close {
+      display: table;
+    }
+    ~ .btn-open {
+      display: none;
+    }
+  }
+}
+#video-mute {
+  &:checked {
+    ~ .video-mute {
+      display: none;
+    }
+    ~ .video-on {
+      display: table;
+    }
+  }
+}
+#video-on {
+  &:checked {
+    ~ .video-mute {
+      display: table;
+    }
+    ~ .video-on {
+      display: none;
+    }
+  }
+}
+
+
+
+
+

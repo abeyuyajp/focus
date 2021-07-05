@@ -12,12 +12,11 @@
             <v-row>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="作業" required v-model="work_type" :rules="[required]"></v-text-field>
+                <v-text-field label="どんな作業をする予定ですか？" required v-model="work_type" :rules="[required]"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="ルーム名" required v-model="room_name" :rules="[required]"></v-text-field>
-                <v-text>※このルーム名はビデオチャット入室時に入力していただきます。</v-text>
+                <v-text-field label="ルーム名  ※ビデオチャット入室時に入力していただきます。" required v-model="room_name" :rules="[required]"></v-text-field>
               </v-col>
 
 

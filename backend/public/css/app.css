@@ -10942,3 +10942,39 @@ a.text-dark:focus {
   }
 }
 
+.radio {
+  display: none;
+}
+
+#audio-mute:checked ~ .btn-close {
+  display: none;
+}
+
+#audio-mute:checked ~ .btn-open {
+  display: table;
+}
+
+#audio-on:checked ~ .btn-close {
+  display: table;
+}
+
+#audio-on:checked ~ .btn-open {
+  display: none;
+}
+
+#video-mute:checked ~ .video-mute {
+  display: none;
+}
+
+#video-mute:checked ~ .video-on {
+  display: table;
+}
+
+#video-on:checked ~ .video-mute {
+  display: table;
+}
+
+#video-on:checked ~ .video-on {
+  display: none;
+}
+
