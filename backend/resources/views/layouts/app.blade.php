@@ -36,14 +36,35 @@
                   </button>
 
                   <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
+                      @if (Auth::check())
+                      <ul class="navbar-nav ml-auto">
+                              <!-- セッション一覧 -->
+                              <li class="nav-item ml-auto">
+                                  <a class="nav-link text-white h5" href="{{ url('/') }}">
+                                      <i class="fas fa-search"></i>
+                                      探す
+                                  </a>
+                              </li>
+                              <!-- end -->
+
+                              <!-- カレンダー -->
+                              <li class="nav-item ml-auto">
+                                  <a class="nav-link text-white h5" href="{{ url('/calendar') }}">
+                                      <i class="fas fa-tv"></i>
+                                      セッション
+                                  </a>
+                              </li>
+                              <!-- end -->
+                      </ul>
+                      @endif
                       <ul class="navbar-nav ml-auto">
                           @guest
                               <li class="nav-item active ml-auto">
-                                  <a class="btn mr-2 text-white" href="{{ route('login') }}" style="background-color: #1976d2;">{{ __('Login') }}</a>
+                                  <a class="btn btn-outline-light" href="{{ route('login') }}">{{ __('Login') }}</a>
                               </li>
                               @if (Route::has('register'))
                                   <li class="nav-item ml-auto">
-                                      <a class="btn btn-outline-light" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                      <a class="btn ml-2 text-white" href="{{ route('register') }}" style="background-color: #1976d2;">{{ __('Register') }}</a>
                                   </li>
                               @endif
                           @else
@@ -53,21 +74,9 @@
                               </li>
                               <!-- end -->
 
-                              <!-- セッション一覧 -->
-                              <li class="nav-item ml-auto">
-                                  <a class="nav-link text-white" href="{{ url('/') }}">探す</a>
-                              </li>
-                              <!-- end -->
-
-                              <!-- カレンダー -->
-                              <li class="nav-item ml-auto">
-                                  <a class="nav-link text-white" href="{{ url('/calendar') }}">スケジュール</a>
-                              </li>
-                              <!-- end -->
-
-                              <!-- ユーザー名 -->
+                              <!-- ユーザー情報 -->
                               <li class="nav-item dropdown ml-auto">
-                                  <a class="nav-link text-white" href="{{ url('/user/edit') }}">
+                                  <a class="nav-link text-white h5" href="{{ url('/user/edit') }}">
                                       @if(!empty(Auth::user()->profile_image))
                                           <img src="{{ Auth::user()->profile_image }}"  width="30px" height="30px" style="border-radius: 100%;">
                                       @else
@@ -77,20 +86,6 @@
                                   </a>
                               </li>
                               <!-- end -->
-
-                              <!-- ログアウト -->
-                              <li class="nav-item ml-auto">
-                                  <a class="nav-link text-white" href="{{ route('logout') }}"
-                                      onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
-                                      {{ __('ログアウト') }}
-                                  </a>
-                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                      @csrf
-                                  </form>
-                              </li>
-                              <!-- end -->
-
                           @endguest
                       </ul>
                   </div>

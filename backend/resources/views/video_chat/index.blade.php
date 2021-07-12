@@ -11,63 +11,93 @@
         <link href="{{ asset('css/style.css')}}" rel="stylesheet">
     </head>
     <body style="background: linear-gradient(25deg, #331392, #4557ac, #4494c6, #16d3e0) fixed; color: white;">
-        <div class="container">
-            <!--p class="note">
-                Change Room mode (before join in a room):
-                <a href="#">mesh</a> / <a href="#sfu">sfu</a>
-            </p-->
-            <div style="margin: 5vh 0;">
-                <input type="text" placeholder="ルーム名を入力してください" id="js-room-id" style="height: 3vh; width: 40vw; ">
-                    <button id="js-join-trigger">入室</button>
-                    <button id="js-leave-trigger">退室</button>
+        <div class="container mt-5">
+            
+            <!-- モーダルウィンドウ -->
+            <div class="popup" id="js-popup">
+                <div class="popup-inner"  style="border-radius: 20px;">
+                    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+                    <h3 class="text-center" style="color: black;">ルーム名を入力してください</h3>
+                    <div class="form-group mt-3">
+                        <input class="form-control" type="text" placeholder="(例) focus01" id="js-room-id" style=" width: 100%;">
+                    </div>
+                    <div class="row justify-content-center">
+                        <button id="js-join-trigger" class="btn btn-success mt-3" style="color: white; width: 20%; height: 5vh;">
+                            開始
+                        </button>
+                    </div>
+                </div>
             </div>
+
+
             <div class="room">
+                <!-- 自分の映像 -->
                 <div>
                     <video id="js-local-stream"></video>
-
-                    <!-- app.scssでスタイル調整してる -->
-                    <div class="row">
-                        <div class="audio">
-                            <input type="radio" class="radio" id="audio-mute" name="btn" checked="checked" />
-                            <label class="btn btn-close" for="audio-mute">
-                                <i class="fas fa-microphone fa-2x" style="color: white;"></i>
-                            </label>
-
-                            <input type="radio" class="radio" id="audio-on" name="btn" />
-                            <label class="btn btn-open" for="audio-on">
-                                <i class="fas fa-microphone-slash fa-2x" style="color: white;"></i>
-                            </label>
-                        </div>
-
-                        <!-- app.scssでスタイル調整してる -->
-                        <div class="video">
-                            <input type="radio" class="radio" id="video-mute" name="video" checked="checked" />
-                            <label class="video video-mute" for="video-mute">
-                                <i class="fas fa-video fa-2x"></i>
-                            </label>
-
-                            <input type="radio" class="radio" id="video-on" name="video" />
-                            <label class="video video-on" for="video-on">
-                                <i class="fas fa-video-slash fa-2x"></i>
-                            </label>
-                        </div>
-                    </div>
-
                     <span id="js-room-mode"  style="visibility:hidden"></span>
                 </div>
+                <!-- end -->
 
+                <!-- 相手の映像 -->
                 <div class="remote-streams" id="js-remote-streams"></div>
+                <!-- end -->
+
+                <!-- メッセージ -->
                 <div>
                     <pre class="messages" id="js-messages"></pre>
                     <input type="hidden" id="js-local-text">
-                    <!--button id="js-send-trigger"></button-->
                     <input type="hidden" id="js-send-trigger">
                 </div>
+                <!-- end -->
             </div>
             <p class="meta" id="js-meta"></p>
         </div>
         <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.1.js"></script>
     </body>
+
+    <!-- フッターメニュー -->
+    <footer class="fixed-bottom bg-navy" style="height: 7vh;">
+        <div class="container">
+            <ul class="row justify-content-center mt-3">
+                <li class="mr-5" style="list-style: none;">
+                    <div class="audio">
+                        <input type="radio" class="radio" id="audio-mute" name="btn" checked="checked" />
+                        <label class="audio btn-close" for="audio-mute">
+                            <i class="fas fa-microphone fa-2x" style="color: white;"></i>
+                        </label>
+
+                        <input type="radio" class="radio" id="audio-on" name="btn" />
+                        <label class="audio btn-open" for="audio-on">
+                            <i class="fas fa-microphone-slash fa-2x" style="color: white;"></i>
+                        </label>
+                    </div>
+                </li>
+
+                <li class="mr-5" style="list-style: none;">
+                    <div class="video">
+                        <input type="radio" class="radio" id="video-mute" name="video" checked="checked" />
+                        <label class="video video-mute" for="video-mute">
+                            <i class="fas fa-video fa-2x"></i>
+                        </label>
+
+                        <input type="radio" class="radio" id="video-on" name="video" />
+                        <label class="video video-on" for="video-on">
+                            <i class="fas fa-video-slash fa-2x"></i>
+                        </label>
+                    </div>
+                </li>
+
+                <li style="list-style: none;">
+                    <div>
+                        <button class="btn btn-danger" id="js-leave-trigger">退室</button>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </footer>
+    <!-- end -->
+
 </html>
 
 
@@ -90,11 +120,24 @@
   const micOn = document.getElementById('audio-on');
   const videoMute = document.getElementById('video-mute');
   const videoOn = document.getElementById('video-on');
+  const popup = document.getElementById('js-popup');
+  const joinBtn = document.getElementById('js-join-trigger');
+  const closeBtn = document.getElementById('js-close-btn');
+  
+  window.onload = function() {
+    if(!popup) return;
+    popup.classList.add('is-show');
 
-  //meta.innerText = `
-    //UA: ${navigator.userAgent}
-    //SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
-  //`.trim();
+    closePopUp(closeBtn);
+    closePopUp(joinBtn);
+
+    function closePopUp(elem) {
+      if(!elem) return;
+      elem.addEventListener('click', function() {
+        popup.classList.remove('is-show');
+      })
+    }
+  }
 
   // 同時接続モードがSFUなのかMESHなのかをここで設定
   const getRoomModeByHash = () => (location.hash === '#sfu' ? 'sfu' : 'mesh');
@@ -203,27 +246,21 @@
     // 画面オフ
     videoMute.addEventListener('click', () => {
       localStream.getVideoTracks().forEach((track) => (track.enabled = false));
-      //var videoTrack = localStream.getVideoTracks()[0];
-      //videoTrack.enabled = false
-      console.log('video-OFF')
     });
     
     // 画面オン
     videoOn.addEventListener('click', () => {
       localStream.getVideoTracks().forEach((track) => (track.enabled = true));
-      console.log('video-ON')
     });
     
     // マイクオフ
     micMute.addEventListener('click', () => {
       localStream.getAudioTracks().forEach((track) => (track.enabled = false));
-      console.log('mic-OFF')
     });
 
     // マイクオン
     micOn.addEventListener('click', () => {
       localStream.getAudioTracks().forEach((track) => (track.enabled = true));
-      console.log('mic-ONN')
     });
   });
 

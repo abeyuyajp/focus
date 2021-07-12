@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2><i class="fas fa-user-edit"></i>マイページ</h2>
-            <div class="card">
+            <div class="card" style="border-radius: 20px;">
                 <div class="card-body">
                     <form enctype="multipart/form-data" method="POST" action="/user/{{ $user->id }}" class="form-horizontal">
                         @csrf 
@@ -15,7 +15,7 @@
                                 @if(!empty($user->profile_image))
                                     <img src="{{ $user->profile_image }}"  width="70vw" height="70px" style="border-radius: 100%;" id="img">
                                 @else
-                                    <i class="far fa-user-circle fa-3x"></i>
+                                    <i class="far fa-user-circle fa-3x" id="no-img"></i>
                                 @endif
                                 <input id="profile_image" type="file" name="profile_image" onchange="previewImage(this);">
                             </label>
@@ -38,6 +38,16 @@
                     </form>
                 </div>
             </div>
+            <div class="mt-5 text-center">
+                <a  href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    {{ __('ログアウト') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -47,6 +57,7 @@
         var fileReader = new FileReader();
         fileReader.onload = (function() {
             document.getElementById('img').src = fileReader.result;
+            document.getElementById('no-img') = fileReader.result;
         });
         fileReader.readAsDataURL(obj.files[0]);
     }

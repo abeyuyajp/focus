@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css';
+import Vue from 'vue';
 
 /**
  * The following block of code may be used to automatically register your

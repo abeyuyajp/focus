@@ -161,7 +161,7 @@ class PostsController extends Controller
         $joinPostIds = Join::orderBy('post_start', 'asc')
                             ->where('from_user_id', Auth::user()->id)
                             ->orWhere('to_user_id', Auth::user()->id)
-                            ->paginate(4);
+                            ->get();
 
         return view('posts.calendar',['joinPostIds' => $joinPostIds]);
     }

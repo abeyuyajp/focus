@@ -17,7 +17,7 @@
         <!-- マッチングした投稿一覧 -->
         <div class="col-md-3">
             <h4>予定</h4>
-            <p class="text-muted">※ルーム名を入力して入室してください。</p>
+            <p class="text-muted">※入室時にルーム名を入力していただきます。</p>
             @foreach($joinPostIds as $joinPostId)
                 <!-- 終了時刻以降の投稿は表示しない -->
                 @if(strtotime(date('Y-m-d H:i')) < strtotime($joinPostId->post_end))
@@ -48,7 +48,6 @@
                                 {{ date('n月d日', strtotime($joinPostId->post_start)) }}&emsp;
                                 {{ date('H:i', strtotime($joinPostId->post_start)) }}〜{{ date('H:i', strtotime($joinPostId->post_end)) }}
                             </div>
-                            </p>
 
                             <div class="row mt-2">
                                 <!-- ビデオチャットボタン -->
@@ -72,13 +71,7 @@
         </div>
         <!-- end -->
 
-        <!--ページネーション-->
-        <div class="mx-auto mt-4" style="width: 150px;">
-            <div class="col-md-4">
-                {{ $joinPostIds->appends(request()->input())->links() }}
-            </div>
-        </div>
-        <!-- end -->
+        
 
     </div>
 </div>

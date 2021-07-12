@@ -8,9 +8,7 @@
 
                 <div class="card-body" style="padding: 60px;">
                     <h3 class="text-center m-3"><strong>ログイン</strong></h3>
-
                     <hr>
-
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
