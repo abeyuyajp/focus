@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Join;
 
+
 class PostsController extends Controller
 {
     public function __construct()
@@ -162,8 +163,10 @@ class PostsController extends Controller
                             ->where('from_user_id', Auth::user()->id)
                             ->orWhere('to_user_id', Auth::user()->id)
                             ->get();
+        $bg_image = Storage::disk('s3')->url('card.png');
+        
 
-        return view('posts.calendar',['joinPostIds' => $joinPostIds]);
+        return view('posts.calendar',['joinPostIds' => $joinPostIds, 'bg_image' => $bg_image]);
     }
 
 }

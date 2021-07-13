@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="jumbotron jumbotron-fluid d-flex align-items-end" style="background:url(storage/image/focus-header.png); background-size: auto; background-position: center 60%; height: 40vh;" >
+    <div class="jumbotron jumbotron-fluid d-flex align-items-end" style="background:url({{ Storage::disk('s3')->url('focus-header.png') }}); background-size: auto; background-position: center 60%; height: 40vh;" >
     </div>
 
     <div class="container marketing">

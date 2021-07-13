@@ -21,7 +21,7 @@
             @foreach($joinPostIds as $joinPostId)
                 <!-- 終了時刻以降の投稿は表示しない -->
                 @if(strtotime(date('Y-m-d H:i')) < strtotime($joinPostId->post_end))
-                    <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px; background:url(storage/image/card-image.png); background-size: auto; background-position: center 60%;">
+                    <div class="card d-inline-block m-2" style="width: 18rem; border-radius: 20px; background:url({{ $bg_image }}); background-size: auto; background-position: center 60%;">
                         <div class="card-body">
 
                             <!-- 投稿したユーザーの画像と名前を表示 -->
