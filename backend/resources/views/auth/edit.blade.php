@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2><i class="fas fa-user-edit"></i>マイページ</h2>
+            <h2><i class="fas fa-user-edit"></i><strong>マイページ</strong></h2>
             <div class="card" style="border-radius: 20px;">
                 <div class="card-body">
                     <form enctype="multipart/form-data" method="POST" action="/user/{{ $user->id }}" class="form-horizontal">
