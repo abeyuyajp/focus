@@ -94,7 +94,7 @@ return [
     'not_regex'            => ':attributeの形式が正しくありません。',
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
-    'regex'                => ':attributeは英語(半角英数字)で入力してください',
+    'regex'                => ':attributeは半角英数字混合で入力してください',
     'required'             => ':attributeがありません。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',

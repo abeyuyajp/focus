@@ -16,7 +16,7 @@ class Join extends Model
         'post_end',
         'post_work_type',
     ];
-    
+
     public function post()
     {
         return $this->belongsTo('App\Post');
