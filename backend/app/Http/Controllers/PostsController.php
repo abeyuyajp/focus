@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Post;
+use App\Post\Repositories\PostRepository;
+use App\EloquentModel\Post;
 use Validator;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,8 +15,12 @@ use App\Join;
 
 class PostsController extends Controller
 {
-    public function __construct()
-    {
+    private PostRepository $postRepository;
+
+    public function __construct(
+        PostRepository $postRepository
+    ) {
+        $this->postRepository = $postRepository;
         $this->middleware('auth');
     }
     /**
@@ -29,10 +34,8 @@ class PostsController extends Controller
         $joinedPostIds = Join::all()->pluck('post_id')->toArray();
 
         //Joinされている投稿IDは全て排除して取得
-        $posts = Post::orderBy('start', 'asc')
-                    ->whereNotIn('id',$joinedPostIds)
-                    ->paginate(12);
-        
+        $posts = $this->postRepository->getPostIdsExclusionJoinedPost($joinedPostIds);
+
         return view('posts.index', compact('posts'));
     }
 
@@ -60,31 +63,34 @@ class PostsController extends Controller
         $posts->room_name  =    $request->room_name;
         $posts->start      =    $request->start;
         $posts->end        =    $request->end;
-        $posts->save(); 
+        $posts->save();
         return redirect('/')->with('message', '投稿が完了しました');
     }
 
+    /**
+     * 現在使用していないメソッド
+     */
     public function show(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = $this->postRepository->getPostId($id);
         return view ('posts.show', compact('post'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 現在使用していないメソッド
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($post_id)
     {
-        $post = Post::where('user_id', Auth::user()->id)->find($post_id);
+        $post = $this->postRepository->getPostIdByUser($post_id);
         return view('posts.edit', ['post' => $post]);
 
     }
 
     /**
-     * Update the specified resource in storage.
+     * 現在使用していないメソッド
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -95,7 +101,7 @@ class PostsController extends Controller
         $posts = Post::where('user_id', Auth::user()->id)->find($request->id);
 
         $posts->work_type  =    $request->work_type;
-        $posts->save(); 
+        $posts->save();
         return redirect('/')->with('message', '投稿を編集しました');
     }
 
@@ -103,12 +109,8 @@ class PostsController extends Controller
     {
         //すでにJoinされた投稿を取得
         $joinedPostIds = Join::all()->pluck('post_id')->toArray();
-        
-        $posts = Post::where('work_type', 'like', "%{$request->work_type}%")
-                     ->where('start', 'like', "%{$request->start}%")
-                     ->whereNotIn('id',$joinedPostIds)
-                     ->orderBy('created_at', 'desc')
-                     ->paginate(12);
+
+        $posts = $this->postRepository->searchPost($request->work_type, $request->start, $joinedPostIds);
 
         return view('posts.index', [
             'posts'=>$posts,
@@ -144,18 +146,9 @@ class PostsController extends Controller
 
         $calendars = Post::where('user_id', Auth::user()->id)
                          ->get();
-
         return $calendars;
     }
 
-    //public function getJoinEvent()
-    //{
-        //$join_event = Join::where('from_user_id', Auth::user()->id)
-                          //->orWhere('to_user_id', Auth::user()->id)
-                          //->get();
-
-        //return $join_event;
-    //}
 
     public function showCalendar()
     {
@@ -164,7 +157,7 @@ class PostsController extends Controller
                             ->orWhere('to_user_id', Auth::user()->id)
                             ->get();
         $bg_image = Storage::disk('s3')->url('card.png');
-        
+
 
         return view('posts.calendar',['joinPostIds' => $joinPostIds, 'bg_image' => $bg_image]);
     }
