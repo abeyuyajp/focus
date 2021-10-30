@@ -17,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
           \App\Post\Repositories\PostRepository::class,
             \App\Post\Repositories\EloquentPostRepository::class
         );
+
+        $this->app->bind(
+            \App\Join\Repositories\JoinRepository::class,
+            \App\Join\Repositories\EloquentJoinRepository::class
+        );
     }
 
     /**

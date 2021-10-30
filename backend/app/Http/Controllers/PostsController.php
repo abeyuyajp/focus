@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Post\Repositories\PostRepository;
+use App\Join\Repositories\JoinRepository;
 use App\EloquentModel\Post;
+use Illuminate\Support\Collection;
 use Validator;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,11 +18,14 @@ use App\Join;
 class PostsController extends Controller
 {
     private PostRepository $postRepository;
+    private JoinRepository $joinRepository;
 
     public function __construct(
-        PostRepository $postRepository
+        PostRepository $postRepository,
+        JoinRepository $joinRepository
     ) {
         $this->postRepository = $postRepository;
+        $this->joinRepository = $joinRepository;
         $this->middleware('auth');
     }
     /**
@@ -31,7 +36,7 @@ class PostsController extends Controller
     public function index()
     {
         //すでにJoinされた投稿を取得
-        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
+        $joinedPostIds = $this->joinRepository->getAllJoinedPost();
 
         //Joinされている投稿IDは全て排除して取得
         $posts = $this->postRepository->getPostIdsExclusionJoinedPost($joinedPostIds);
@@ -86,7 +91,6 @@ class PostsController extends Controller
     {
         $post = $this->postRepository->getPostIdByUser($post_id);
         return view('posts.edit', ['post' => $post]);
-
     }
 
     /**
@@ -98,7 +102,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $posts = Post::where('user_id', Auth::user()->id)->find($request->id);
+        $posts = $this->postRepository->getPostIdByUser($request->id);
 
         $posts->work_type  =    $request->work_type;
         $posts->save();
@@ -108,7 +112,7 @@ class PostsController extends Controller
     public function search(Request $request)
     {
         //すでにJoinされた投稿を取得
-        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
+        $joinedPostIds = $this->joinRepository->getAllJoinedPost();
 
         $posts = $this->postRepository->searchPost($request->work_type, $request->start, $joinedPostIds);
 
@@ -125,8 +129,7 @@ class PostsController extends Controller
      */
     public function deleteEvent(Request $request)
     {
-        $calendar = Post::where('id','=',$request->id)
-            ->first();
+        $calendar = $this->postRepository->getRequestPostId($request->id);
         if($calendar){
             $calendar->delete();
         }
@@ -134,28 +137,15 @@ class PostsController extends Controller
 
     public function getAllEvent()
     {
-        //自分がジョインしたpost_idを取得
-        //$joinId = Join::where('from_user_id', Auth::user()->id)
-                            //->pluck('post_id')
-                            //->toArray();
-
-        //自分の投稿または、ジョインしたpost_idを取得
-        //$calendars = Post::where('user_id', Auth::user()->id)
-                         //->orWhereIn('id', $joinId)
-                         //->get();
-
-        $calendars = Post::where('user_id', Auth::user()->id)
-                         ->get();
+        $calendars = $this->postRepository->getPostByUser();
         return $calendars;
     }
 
 
     public function showCalendar()
     {
-        $joinPostIds = Join::orderBy('post_start', 'asc')
-                            ->where('from_user_id', Auth::user()->id)
-                            ->orWhere('to_user_id', Auth::user()->id)
-                            ->get();
+        $joinPostIds = $this->joinRepository->getAllSessionByUser();
+
         $bg_image = Storage::disk('s3')->url('card.png');
 
 

@@ -5,6 +5,7 @@ namespace App\Post\Repositories;
 use App\EloquentModel\Post;
 use App\Post\Repositories\PostRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class EloquentPostRepository implements PostRepository
 {
@@ -26,6 +27,25 @@ class EloquentPostRepository implements PostRepository
     public function getPostIdByUser($post_id): Post
     {
         return Post::where('user_id', Auth::user()->id)->find($post_id);
+    }
+
+    /**
+     * ユーザーに紐づく投稿を取得
+     * @return Collection
+     */
+    public function getPostByUser(): Collection
+    {
+        return Post::where('user_id', Auth::user()->id)->get();
+    }
+
+    /**
+     * 選択している投稿を取得
+     * @param int
+     * @return Collection
+     */
+    public function getRequestPostId($postId): Collection
+    {
+        return Post::where('id', '=', $postId)->first();
     }
 
     /**

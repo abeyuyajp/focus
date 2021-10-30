@@ -4,7 +4,7 @@ namespace App\Post\Repositories;
 
 use App\EloquentModel\Post;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 Interface PostRepository
 {
@@ -21,6 +21,19 @@ Interface PostRepository
      * @return Post
      */
     public function getPostIdByUser($post_id): Post;
+
+    /**
+     * ユーザーに紐づく投稿を取得
+     * @return Collection
+     */
+    public function getPostByUser(): Collection;
+
+    /**
+     * 選択している投稿を取得
+     * @param int
+     * @return Collection
+     */
+    public function getRequestPostId($postId): Collection;
 
     /**
      * ジョインされていない投稿を全て取得
