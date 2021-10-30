@@ -68,7 +68,7 @@ class EloquentPostRepository implements PostRepository
      * @param array $joinedPostIds
      * @return LengthAwarePaginator
      */
-    public function searchPost(string $work, string $start, array $joinedPostIds): LengthAwarePaginator
+    public function searchPost(string $work = null, string $start = null, array $joinedPostIds): LengthAwarePaginator
     {
         return Post::where('work_type', 'like', "%{$work}%")
             ->where('start', 'like', "%{$start}%")
