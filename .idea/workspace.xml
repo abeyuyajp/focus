@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8e050fc-3330-41dd-a39a-da0724fc82b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/JoinController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/JoinController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/PostsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Join/Repositories/EloquentJoinRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/Join/EloquentJoinRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Join/Repositories/JoinRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/Join/JoinRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Post/Repositories/EloquentPostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/Post/EloquentPostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Post/Repositories/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/Post/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Providers/RepositoryServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Providers/RepositoryServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/EloquentModel/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +157,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/app/EloquentModel" />
       <recent name="$PROJECT_DIR$/backend/app/Repositories/Post" />
       <recent name="$PROJECT_DIR$/backend/app/Repositories" />
       <recent name="$PROJECT_DIR$/backend/app/Repositories/Join" />
@@ -184,7 +178,7 @@
       <workItem from="1634977343952" duration="11000" />
       <workItem from="1635343945091" duration="11569000" />
       <workItem from="1635567823462" duration="2611000" />
-      <workItem from="1635575500353" duration="13469000" />
+      <workItem from="1635575500353" duration="13787000" />
     </task>
     <servers />
   </component>
