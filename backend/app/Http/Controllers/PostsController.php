@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Post;
+use App\Repositories\Post\PostRepository;
+use App\Repositories\Join\JoinRepository;
+use App\EloquentModel\Post;
+use Illuminate\Support\Collection;
 use Validator;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,8 +17,15 @@ use App\Join;
 
 class PostsController extends Controller
 {
-    public function __construct()
-    {
+    private PostRepository $postRepository;
+    private JoinRepository $joinRepository;
+
+    public function __construct(
+        PostRepository $postRepository,
+        JoinRepository $joinRepository
+    ) {
+        $this->postRepository = $postRepository;
+        $this->joinRepository = $joinRepository;
         $this->middleware('auth');
     }
     /**
@@ -26,13 +36,11 @@ class PostsController extends Controller
     public function index()
     {
         //すでにJoinされた投稿を取得
-        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
+        $joinedPostIds = $this->joinRepository->getAllJoinedPost();
 
         //Joinされている投稿IDは全て排除して取得
-        $posts = Post::orderBy('start', 'asc')
-                    ->whereNotIn('id',$joinedPostIds)
-                    ->paginate(12);
-        
+        $posts = $this->postRepository->getPostIdsExclusionJoinedPost($joinedPostIds);
+
         return view('posts.index', compact('posts'));
     }
 
@@ -60,31 +68,33 @@ class PostsController extends Controller
         $posts->room_name  =    $request->room_name;
         $posts->start      =    $request->start;
         $posts->end        =    $request->end;
-        $posts->save(); 
+        $posts->save();
         return redirect('/')->with('message', '投稿が完了しました');
     }
 
+    /**
+     * 現在使用していないメソッド
+     */
     public function show(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = $this->postRepository->getPostId($id);
         return view ('posts.show', compact('post'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 現在使用していないメソッド
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($post_id)
     {
-        $post = Post::where('user_id', Auth::user()->id)->find($post_id);
+        $post = $this->postRepository->getPostIdByUser($post_id);
         return view('posts.edit', ['post' => $post]);
-
     }
 
     /**
-     * Update the specified resource in storage.
+     * 現在使用していないメソッド
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -92,23 +102,19 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $posts = Post::where('user_id', Auth::user()->id)->find($request->id);
+        $posts = $this->postRepository->getPostIdByUser($request->id);
 
         $posts->work_type  =    $request->work_type;
-        $posts->save(); 
+        $posts->save();
         return redirect('/')->with('message', '投稿を編集しました');
     }
 
     public function search(Request $request)
     {
         //すでにJoinされた投稿を取得
-        $joinedPostIds = Join::all()->pluck('post_id')->toArray();
-        
-        $posts = Post::where('work_type', 'like', "%{$request->work_type}%")
-                     ->where('start', 'like', "%{$request->start}%")
-                     ->whereNotIn('id',$joinedPostIds)
-                     ->orderBy('created_at', 'desc')
-                     ->paginate(12);
+        $joinedPostIds = $this->joinRepository->getAllJoinedPost();
+
+        $posts = $this->postRepository->searchPost($request->work_type, $request->start, $joinedPostIds);
 
         return view('posts.index', [
             'posts'=>$posts,
@@ -123,8 +129,7 @@ class PostsController extends Controller
      */
     public function deleteEvent(Request $request)
     {
-        $calendar = Post::where('id','=',$request->id)
-            ->first();
+        $calendar = $this->postRepository->getRequestPostId($request->id);
         if($calendar){
             $calendar->delete();
         }
@@ -132,39 +137,17 @@ class PostsController extends Controller
 
     public function getAllEvent()
     {
-        //自分がジョインしたpost_idを取得
-        //$joinId = Join::where('from_user_id', Auth::user()->id)
-                            //->pluck('post_id')
-                            //->toArray();
-
-        //自分の投稿または、ジョインしたpost_idを取得
-        //$calendars = Post::where('user_id', Auth::user()->id)
-                         //->orWhereIn('id', $joinId)
-                         //->get();
-
-        $calendars = Post::where('user_id', Auth::user()->id)
-                         ->get();
-
+        $calendars = $this->postRepository->getPostByUser();
         return $calendars;
     }
 
-    //public function getJoinEvent()
-    //{
-        //$join_event = Join::where('from_user_id', Auth::user()->id)
-                          //->orWhere('to_user_id', Auth::user()->id)
-                          //->get();
-
-        //return $join_event;
-    //}
 
     public function showCalendar()
     {
-        $joinPostIds = Join::orderBy('post_start', 'asc')
-                            ->where('from_user_id', Auth::user()->id)
-                            ->orWhere('to_user_id', Auth::user()->id)
-                            ->get();
+        $joinPostIds = $this->joinRepository->getAllSessionByUser();
+
         $bg_image = Storage::disk('s3')->url('card.png');
-        
+
 
         return view('posts.calendar',['joinPostIds' => $joinPostIds, 'bg_image' => $bg_image]);
     }

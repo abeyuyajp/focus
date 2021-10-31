@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Post;
 use App\Join;
-use App\Notifications\PostJoined; 
+use App\Repositories\Join\JoinRepository;
+use App\Notifications\PostJoined;
 use App\Notifications\FromUserDeleted;
 use App\Notifications\ToUserDeleted;
 use App\Notifications\PostJoinedWeb;
@@ -15,6 +16,14 @@ use App\Events\Notice;
 class JoinController extends Controller
 {
     #use Notifiable;
+
+    private JoinRepository $joinRepository;
+
+    public function __construct(
+        JoinRepository $joinRepository
+    ) {
+        $this->joinRepository = $joinRepository;
+    }
 
     public function store(Request $request)
     {
@@ -35,23 +44,23 @@ class JoinController extends Controller
         $joined_user = Auth::user()->find($join->to_user_id);
         \Notification::send($joined_user, new \App\Notifications\PostJoinedWeb(\Auth::user()->name, $join->created_at, $join->post_start, $join->post_end, $join->post_id ));
         event(new Notice());
-    
+
         return redirect(url('/calendar'));
     }
 
     public function destroy(Request $request)
     {
         $id = $request->id;
-    
-        $join = Join::find($id);
-        
+
+        $join = $this->joinRepository->getJoined($id);
+
         $join->delete();
 
         # from_user_idがキャンセルした場合
-        #if(Auth::user()->id == $join->to_user_id) {  
+        #if(Auth::user()->id == $join->to_user_id) {
             #$from_user_deleted = Auth::user()->find($join->from_user_id);
             #\Notification::send($from_user_deleted, new \App\Notifications\FromUserDeleted(\Auth::user()->name));
-        #}elseif(Auth::user()->id == $join->from_user_id) {  
+        #}elseif(Auth::user()->id == $join->from_user_id) {
             #$to_user_deleted = Auth::user()->find($join->to_user_id);
             #\Notification::send($to_user_deleted, new \App\Notifications\ToUserDeleted(\Auth::user()->name));
         #}
