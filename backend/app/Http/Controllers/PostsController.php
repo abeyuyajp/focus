@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Post\Repositories\PostRepository;
-use App\Join\Repositories\JoinRepository;
+use App\Repositories\Post\PostRepository;
+use App\Repositories\Join\JoinRepository;
 use App\EloquentModel\Post;
 use Illuminate\Support\Collection;
 use Validator;

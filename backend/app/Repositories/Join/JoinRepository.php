@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Join\Repositories;
+namespace App\Repositories\Join;
 
-use App\EloquentModel\Join;
 use Illuminate\Database\Eloquent\Collection;
 
 Interface JoinRepository

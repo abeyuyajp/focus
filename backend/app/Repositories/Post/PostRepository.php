@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Post\Repositories;
+namespace App\Repositories\Post;
 
 use App\EloquentModel\Post;
 use Illuminate\Pagination\LengthAwarePaginator;

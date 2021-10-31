@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Post\Repositories;
+namespace App\Repositories\Post;
 
 use App\EloquentModel\Post;
-use App\Post\Repositories\PostRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 

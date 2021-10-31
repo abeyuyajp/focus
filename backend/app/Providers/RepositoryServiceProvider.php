@@ -14,8 +14,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         // 下記のサービス(クラス)をサービスコンテナに登録
-        $this->app->bind(\App\Post\Repositories\PostRepository::class, \App\Post\Repositories\EloquentPostRepository::class);
-        $this->app->bind(\App\Join\Repositories\JoinRepository::class, \App\Join\Repositories\EloquentJoinRepository::class);
+        $this->app->bind(\App\Repositories\Post\PostRepository::class, \App\Repositories\Post\EloquentPostRepository::class);
+        $this->app->bind(\App\Repositories\Join\JoinRepository::class, \App\Repositories\Join\EloquentJoinRepository::class);
     }
 
     /**

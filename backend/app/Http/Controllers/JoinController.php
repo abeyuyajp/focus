@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Post;
 use App\Join;
-use App\Join\Repositories\JoinRepository;
+use App\Repositories\Join\JoinRepository;
 use App\Notifications\PostJoined;
 use App\Notifications\FromUserDeleted;
 use App\Notifications\ToUserDeleted;
